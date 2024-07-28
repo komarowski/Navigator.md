@@ -1,0 +1,99 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\assets\css\prism.css" />
+    <None Remove="Resources\assets\css\styles.css" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.eot" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.ttf" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.woff" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.woff2" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Bold.eot" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Bold.ttf" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Bold.woff" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Bold.woff2" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Light.eot" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Light.ttf" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Light.woff" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Light.woff2" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Medium.eot" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Medium.ttf" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Medium.woff" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Medium.woff2" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Regular.eot" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Regular.ttf" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Regular.woff" />
+    <None Remove="Resources\assets\fonts\Roboto\Roboto-Regular.woff2" />
+    <None Remove="Resources\assets\js\main.js" />
+    <None Remove="Resources\assets\js\prism.js" />
+    <None Remove="Resources\assets\logo.ico" />
+    <None Remove="Resources\assets\logo.svg" />
+    <None Remove="Resources\content\index.html" />
+    <None Remove="Resources\content\index.md" />
+    <None Remove="Resources\templates\absolute-standalone.html" />
+    <None Remove="Resources\templates\absolute.html" />
+    <None Remove="Resources\templates\relative-standalone.html" />
+    <None Remove="Resources\templates\relative.html" />
+    <None Remove="Resources\test\notes\note.md" />
+    <None Remove="Resources\test\programming\csharp\code.md" />
+    <None Remove="Resources\test\programming\csharp\theory.md" />
+    <None Remove="Resources\test\programming\javascript\code.md" />
+    <None Remove="Resources\test\programming\javascript\theory.md" />
+    <None Remove="Resources\test\programming\sql\basics.md" />
+    <None Remove="Resources\test\programming\sql\sql.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\assets\logo.ico" />
+    <EmbeddedResource Include="Resources\content\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\assets\css\prism.css" />
+    <EmbeddedResource Include="Resources\assets\css\styles.css" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.eot" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.ttf" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.woff" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.woff2" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Bold.eot" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Bold.ttf" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Bold.woff" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Bold.woff2" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Light.eot" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Light.ttf" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Light.woff" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Light.woff2" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Medium.eot" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Medium.ttf" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Medium.woff" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Medium.woff2" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.eot" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.ttf" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.woff" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.woff2" />
+    <EmbeddedResource Include="Resources\assets\js\main.js" />
+    <EmbeddedResource Include="Resources\assets\js\prism.js" />
+    <EmbeddedResource Include="Resources\content\index.md" />
+    <EmbeddedResource Include="Resources\templates\absolute-standalone.html" />
+    <EmbeddedResource Include="Resources\templates\absolute.html" />
+    <EmbeddedResource Include="Resources\templates\relative-standalone.html" />
+    <EmbeddedResource Include="Resources\templates\relative.html" />
+    <EmbeddedResource Include="Resources\test\notes\note.md" />
+    <EmbeddedResource Include="Resources\test\programming\csharp\code.md" />
+    <EmbeddedResource Include="Resources\test\programming\csharp\theory.md" />
+    <EmbeddedResource Include="Resources\test\programming\javascript\code.md" />
+    <EmbeddedResource Include="Resources\test\programming\javascript\theory.md" />
+    <EmbeddedResource Include="Resources\test\programming\sql\basics.md" />
+    <EmbeddedResource Include="Resources\test\programming\sql\sql.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.49.1" />
+  </ItemGroup>
+
+</Project>

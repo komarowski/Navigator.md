@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="assets/logo.ico">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/prism.css" />
+</head>
+
+<body>
+  <header class="header flex flex-center">
+    <div class="flex flex-center">
+      <div id="btn-menu" class="button-icon button-icon--menu">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#FFFFFF">
+          <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+        </svg>
+      </div>
+      <a class="header-text header-link" href="index.html">Navigator.md</a>
+    </div>
+    <div id="btn-markdown-get" class="button-icon button-icon--edit">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" /></svg>
+    </div>
+  </header>
+
+  <main class="main flex">
+    <div id="sidebar" class="sidebar container-scroll">
+      <div id="tree-view" data-file="{@FileCode}" data-path="{@MarkdownPath}" class="tree-view"></div>
+    </div>
+
+    <div class="container-scroll">
+      <div class="container-text">
+        <div class="flex">
+          <div class="col-blog">
+            <div id="blog" class="blog">
+              {@MainBody}
+            </div>
+          </div>
+
+          <div class="col-content">
+            <div class="container-content">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="flex flex-center flex-space-between">
+        <div class="flex flex-center" style="width: fit-content;">
+          <div class="header-text">Edit markdown</div>
+          <div id="btn-markdown-post" class="button-icon button-icon--save flex">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z" /></svg>
+          </div>
+        </div>
+        <div id="btn-modal-close" class="button-icon flex">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-168-88-88 224-224-224-224 88-88 224 224 224-224 88 88-224 224 224 224-88 88-224-224-224 224Z" /></svg>
+        </div>
+      </div>
+      <textarea id="textarea" class="modal-textarea" placeholder="Markdown text..."></textarea>
+    </div>
+  </div>
+
+  <script src="tree.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/prism.js"></script>
+</body>
+
+</html>
