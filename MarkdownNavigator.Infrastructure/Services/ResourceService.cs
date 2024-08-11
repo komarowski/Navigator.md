@@ -16,16 +16,10 @@ namespace MarkdownNavigator.Infrastructure.Services
     /// Gets html tempalte.
     /// </summary>
     /// <param name="isExport">Export mode.</param>
-    /// <param name="isStandalone">Standalone mode.</param>
     /// <returns>Html tempalte.</returns>
-    public static string GetTemplate(bool isExport, bool isStandalone)
+    public static string GetTemplate(bool isExport)
     {
-      var templateName = isExport ? "relative" : "absolute";
-      if (isStandalone)
-      {
-        templateName += "-standalone";
-      }
-
+      var templateName = isExport ? "export" : "default";
       var resourceName = GetFullResourceName($"templates.{templateName}.html");
       return GetEmbeddedResource(resourceName);
     }
@@ -37,6 +31,16 @@ namespace MarkdownNavigator.Infrastructure.Services
     public static string GetIndexMdContent()
     {
       var resourceName = GetFullResourceName("content.index.md");
+      return GetEmbeddedResource(resourceName);
+    }
+
+    /// <summary>
+    /// Gets help.md content text.
+    /// </summary>
+    /// <returns>help.md content text.</returns>
+    public static string GetHelpMdContent()
+    {
+      var resourceName = GetFullResourceName("content.help.md");
       return GetEmbeddedResource(resourceName);
     }
 
