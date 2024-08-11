@@ -11,7 +11,7 @@ The main purpose of this application is to organize your bookmarks, notes, artic
 - Shows a tree view of markdown files
 - Shows table of contents (h1, h2 tags)
 - Tracks changes in markdown files and modifies html accordingly
-- Extended markdown syntax for details, image slider
+- Extended markdown syntax for details, image slider, tabs, links
 - Editing a markdown file
 
 ## Demo
@@ -29,18 +29,20 @@ App settings locate in appsettings.json in `CustomSettings` section. Multiple se
 	"CustomSettings": {
 	  "SettingsList": [
 		{
-		  "Name": "Settings name 1",
+		  "Name": "Default",
 		  "SourceFolder": "Path\\To\\Folder\\With\\Markdown\\Files",
-		  "IsExport": false,
-		  "IsStandalone": false,
-		  "IsWebServer": true
+		  "EnableExport": false,
+		  "DisableCopyAssets": false,
+		  "EnableCustomTemplate": false,
+		  "DisableWebServer": false
 		},
 		{
-		  "Name": "Settings name 2",
-		  "SourceFolder": "Path\\To\\Folder\\With\\Markdown\\Files2",
-		  "IsExport": true,
-		  "IsStandalone": false,
-		  "IsWebServer": false
+		  "Name": "Export",
+		  "SourceFolder": "Path\\To\\Folder\\With\\Markdown\\Files",
+		  "EnableExport": true,
+		  "DisableCopyAssets": false,
+		  "EnableCustomTemplate": false,
+		  "DisableWebServer": true
 		}
 	  ]
 	}
