@@ -6,10 +6,12 @@
 
     public string SourceFolder { get; set; } = string.Empty;
 
-    public bool IsExport { get; set; }
+    public bool EnableExport { get; set; }
 
-    public bool IsStandalone { get; set; }
+    public bool DisableCopyAssets { get; set; }
 
-    public bool IsWebServer { get; set; }
+    public bool EnableCustomTemplate { get; set; }
+
+    public bool DisableWebServer { get; set; }
   }
 }

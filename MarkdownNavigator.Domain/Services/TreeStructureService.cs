@@ -12,6 +12,8 @@ namespace MarkdownNavigator.Domain.Services
 
     private readonly string[] excludeFileExtensions = [".js", ".html", ".css"];
 
+    private readonly string[] excludeMarkdownFiles = ["index.md", "help.md"];
+
     public TreeStructure WalkDirectoryTree(DirectoryInfo root, TreeStructure tree, bool refreshAll)
     {
       FileInfo[]? files = null;
@@ -74,7 +76,7 @@ namespace MarkdownNavigator.Domain.Services
       if (file.Extension == ExtensionService.ExtensionMarkdown)
       {
         var htmlCode = GetPathCode(file.FullName);
-        var htmlFile = settings.IsExport
+        var htmlFile = settings.EnableExport
           ? new FileInfo(Path.Combine(settings.SourceFolder, FolderReservedNames.ExportFolder, ExtensionService.GetHtml(htmlCode)))
           : new FileInfo(ExtensionService.MarkdownToHtml(file.FullName));
 
@@ -85,8 +87,13 @@ namespace MarkdownNavigator.Domain.Services
           tree.AddMarkdownToUpdate(file.FullName, htmlCode);
         }
 
+        if (excludeMarkdownFiles.Contains(file.Name))
+        {
+          return;
+        }
+
         var title = GetFileTitle(file);
-        var href = settings.IsExport
+        var href = settings.EnableExport
           ? ExtensionService.GetHtml(htmlCode)
           : "file:///" + htmlFile.FullName.Replace('\\', '/');
         tree.AddFileNode(htmlCode, title, href);
@@ -94,7 +101,7 @@ namespace MarkdownNavigator.Domain.Services
         return;
       }
 
-      if (settings.IsExport && !excludeFileExtensions.Contains(file.Extension))
+      if (settings.EnableExport && !excludeFileExtensions.Contains(file.Extension))
       {
         var targetPath = Path.Combine(settings.SourceFolder, FolderReservedNames.ExportFolder, file.Name);
         var targetFile = new FileInfo(targetPath);
