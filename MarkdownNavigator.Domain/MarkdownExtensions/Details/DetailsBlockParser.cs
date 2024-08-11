@@ -8,8 +8,8 @@ namespace MarkdownNavigator.Domain.MarkdownExtensions
   /// </summary>
   public class DetailsBlockParser : BlockParser
   {
-    private const string DetailsBlockStart = "@@details";
-    private const string DetailsBlockEnd = "@@";
+    protected virtual string DetailsBlockStart => "@@details";
+    protected virtual string DetailsBlockEnd => "@@";
 
     public DetailsBlockParser()
     {

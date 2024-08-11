@@ -167,11 +167,55 @@ WHERE TABLE_NAME='TableName'
     }
 
     [Fact]
+    public void GetNestedDetailsWithSimpleText()
+    {
+      var markdownText = @"
+@@details How we can do it?
+It's very simple.
+Some text.
+@@@details First Nested
+Nested text 1.
+@@@
+Some text between.
+@@@details Second Nested
+Nested text 2.
+@@@
+@@
+";
+
+      var expectedHtml = @"
+<details>
+<summary>How we can do it?</summary>
+<div><p>It's very simple.
+Some text.</p>
+<details>
+<summary>First Nested</summary>
+<div><p>Nested text 1.</p>
+</div>
+</details>
+<p>Some text between.</p>
+<details>
+<summary>Second Nested</summary>
+<div><p>Nested text 2.</p>
+</div>
+</details>
+</div>
+</details>
+";
+
+      var actualHtml = MarkdownService.ConvertToHtml(markdownText);
+
+      Assert.Equal(expectedHtml.NormalizeLineEndings().Trim(), actualHtml.NormalizeLineEndings().Trim());
+    }
+
+    [Fact]
     public void GetHtmlWithTextAndSliderAndDetails()
     {
       var markdownText = @"# Header h1
 
 ## Header h2
+
+[Github link](https://github.com/)
 
 @@slider
 ![image1.jpg](Text for image 1)
@@ -191,6 +235,7 @@ Some other text in the paragraph with **bold font**.
       var expectedHtml = @"
 <h1 id=""header-h1"">Header h1</h1>
 <h2 id=""header-h2"">Header h2</h2>
+<p><a href=""https://github.com/"" target=""_blank"" rel=""noopener noreferrer"">Github link</a></p>
 <div class=""slider"" style=""height: 350px;"">
 <div class=""slide"">
 <img src=""image1.jpg"">
@@ -211,6 +256,66 @@ Some text.</p>
 </div>
 </details>
 <p>Some other text in the paragraph with <strong>bold font</strong>.</p>
+";
+
+      var actualHtml = MarkdownService.ConvertToHtml(markdownText);
+
+      Assert.Equal(expectedHtml.NormalizeLineEndings().Trim(), actualHtml.NormalizeLineEndings().Trim());
+    }
+
+    [Fact]
+    public void GetTwoTabsPanelWithSimpleText()
+    {
+      var markdownText = @"
+@@tabs tabs
+@@@tab First tab
+### First tab
+Some Text.
+@@@tab Second tab
+### Second tab
+Some Text.
+@@@tab Third tab
+### Third tab
+Some Text.
+@@
+Some text between.
+@@tabs tabs2
+@@@tab First tab
+### First tab
+Some Text.
+@@
+";
+
+      var expectedHtml = @"
+<div class=""tabs"">
+<input class=""input"" name=""tabs"" type=""radio"" id=""tabs-1"" checked=""checked""/>
+<label class=""label"" for=""tabs-1"">First tab</label>
+<div class=""panel"">
+<h3 id=""first-tab"">First tab</h3>
+<p>Some Text.</p>
+</div>
+<input class=""input"" name=""tabs"" type=""radio"" id=""tabs-2""/>
+<label class=""label"" for=""tabs-2"">Second tab</label>
+<div class=""panel"">
+<h3 id=""second-tab"">Second tab</h3>
+<p>Some Text.</p>
+</div>
+<input class=""input"" name=""tabs"" type=""radio"" id=""tabs-3""/>
+<label class=""label"" for=""tabs-3"">Third tab</label>
+<div class=""panel"">
+<h3 id=""third-tab"">Third tab</h3>
+<p>Some Text.</p>
+</div>
+</div>
+<p>Some text between.</p>
+<div class=""tabs"">
+<input class=""input"" name=""tabs2"" type=""radio"" id=""tabs2-1"" checked=""checked""/>
+<label class=""label"" for=""tabs2-1"">First tab</label>
+<div class=""panel"">
+<h3 id=""first-tab"">First tab</h3>
+<p>Some Text.</p>
+</div>
+</div>
 ";
 
       var actualHtml = MarkdownService.ConvertToHtml(markdownText);
