@@ -1,22 +1,28 @@
 ﻿# Navigator.md Help
 
-## Basic Syntax
+## Tabs with basic markdown syntax
 
 ```markdown
+@@tabs tabs
+@@@tab Unordered List
 - I just love **bold text**.
 - Italicized text is the *cat's meow*.
-
+@@@tab Ordered List
 1. This text is ***really important***.
 2. Text with `code text`
 3. Text with [link to wikipedia](https://www.wikipedia.org/) 
+@@
 ```
 
+@@tabs tabs
+@@@tab Unordered List
 - I just love **bold text**.
 - Italicized text is the *cat's meow*.
-
+@@@tab Ordered List
 1. This text is ***really important***.
 2. Text with `code text`
 3. Text with [link to wikipedia](https://www.wikipedia.org/) 
+@@
 
 ## Details with code block
 
@@ -31,6 +37,10 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME='TableName'
 ```
 
+@@@details Nested details block
+
+Nested details block content
+@@@
 @@
 ````
 
@@ -44,6 +54,10 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME='TableName'
 ```
 
+@@@details Nested details block
+
+Nested details block content
+@@@
 @@
 
 ## Image slider
