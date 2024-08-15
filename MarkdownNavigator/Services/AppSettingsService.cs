@@ -38,9 +38,9 @@ namespace MarkdownNavigator.Domain.Services
       {
         appSettings.Name = selectedAppSettings.Name;
         appSettings.SourceFolder = selectedAppSettings.SourceFolder;
-        appSettings.IsExport = selectedAppSettings.IsExport;
-        appSettings.IsStandalone = selectedAppSettings.IsStandalone;
-        appSettings.IsWebServer = selectedAppSettings.IsWebServer;
+        appSettings.EnableExport = selectedAppSettings.EnableExport;
+        appSettings.DisableCopyAssets = selectedAppSettings.DisableCopyAssets;
+        appSettings.DisableWebServer = selectedAppSettings.DisableWebServer;
       }
       
       return isValidAppSettings;

@@ -362,6 +362,7 @@ body {
     padding: 16px 36px;
     margin: 5px 0;
     border: 1px solid var(--border);
+	  overflow: auto;
   }
 
     .blog details > summary {
@@ -424,6 +425,54 @@ body {
     .blog table th:last-child,
     table td:last-child {
       margin-bottom: 0;
+    }
+
+
+/* Tabs Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+  .tabs .input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .tabs .label {
+    padding: 12px 18px;
+    background: var(--border);
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--white);
+  }
+
+  .tabs .panel {
+    width: 100%;
+    order: 99;
+    display: none;
+    padding: 10px 10px;
+  }
+
+  .tabs .label:hover {
+    background: var(--border-light);
+  }
+
+  .tabs .input:focus + .label {
+    z-index: 1;
+  }
+
+  .tabs .input:checked + .label {
+    font-weight: bold;
+    background: var(--code);
+    color: var(--link-hover);
+  }
+
+    .tabs .input:checked + .label + .panel {
+      display: block;
     }
 
 

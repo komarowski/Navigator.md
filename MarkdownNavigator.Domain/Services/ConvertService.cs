@@ -12,6 +12,7 @@ namespace MarkdownNavigator.Domain.Services
     private readonly ITreeStructureService treeService = treeStructureService;
 
     private string? indexHtmlContent;
+    private string? helpHtmlContent;
     private string? template;
 
     /// <summary>
@@ -27,13 +28,25 @@ namespace MarkdownNavigator.Domain.Services
     }
 
     /// <summary>
+    /// Content for index.html file.
+    /// </summary>
+    private string HelpHtmlContent
+    {
+      get
+      {
+        helpHtmlContent ??= MarkdownService.ConvertToHtml(ResourceService.GetHelpMdContent());
+        return helpHtmlContent;
+      }
+    }
+
+    /// <summary>
     /// Template for generating html.
     /// </summary>
     private string Template
     {
       get
       {
-        template ??= ResourceService.GetTemplate(settings.IsExport, settings.IsStandalone);
+        template ??= GetTempalte();
         return template;
       }
     }
@@ -41,16 +54,19 @@ namespace MarkdownNavigator.Domain.Services
     /// <summary>
     /// The path where the html files will be generated.
     /// </summary>
-    private string TargetFolder => settings.IsExport
+    private string TargetFolder => settings.EnableExport
       ? Path.Combine(settings.SourceFolder, FolderReservedNames.ExportFolder)
       : settings.SourceFolder;
 
     private string TreeDataPath => Path.Combine(TargetFolder, "tree.js");
+    private string IndexMdPath => Path.Combine(TargetFolder, "index.md");
     private string IndexHtmlPath => Path.Combine(TargetFolder, "index.html");
+    private string HelpHtmlPath => Path.Combine(TargetFolder, "help.html");
+    private string CustomTemplatePath => Path.Combine(TargetFolder, "assets\\template.html");
 
     public int ConvertAllHtml(bool forceRefreshAll = false)
     {
-      if (settings.IsExport)
+      if (settings.EnableExport)
       {
         ResourceService.EnsureDirectoryExists(TargetFolder);
       }
@@ -62,7 +78,7 @@ namespace MarkdownNavigator.Domain.Services
         ConvertHtml(markdownFile.SourcePath, markdownFile.Code);
       }
 
-      if (settings.IsExport)
+      if (settings.EnableExport)
       {
         foreach (var imageFile in tree.FilesToCopy)
         {
@@ -70,15 +86,21 @@ namespace MarkdownNavigator.Domain.Services
         }
       }
 
-      if (!File.Exists(IndexHtmlPath) || forceRefreshAll)
+      if (!File.Exists(IndexMdPath) && (!File.Exists(IndexHtmlPath) || forceRefreshAll))
       {
         var html = InsertIntoTemplate(IndexHtmlContent, string.Empty, string.Empty);
         File.WriteAllText(IndexHtmlPath, html);
       }
 
+      if (!File.Exists(HelpHtmlPath) || forceRefreshAll)
+      {
+        var html = InsertIntoTemplate(HelpHtmlContent, string.Empty, string.Empty);
+        File.WriteAllText(HelpHtmlPath, html);
+      }
+
       GenerateJS(tree);
 
-      if (!settings.IsStandalone) 
+      if (!settings.DisableCopyAssets) 
       {
         ResourceService.CopyAllAssets(TargetFolder);
       }
@@ -96,7 +118,7 @@ namespace MarkdownNavigator.Domain.Services
         var htmlText = MarkdownService.ConvertToHtml(markdown);
         code ??= treeService.GetPathCode(markdownPath);
         var html = InsertIntoTemplate(htmlText, code, markdownPath);
-        var targetPath = settings.IsExport
+        var targetPath = settings.EnableExport
           ? Path.Combine(TargetFolder, ExtensionService.GetHtml(code))
           : ExtensionService.MarkdownToHtml(markdownPath);
         using var streamWriter = new StreamWriter(targetPath);
@@ -130,6 +152,25 @@ namespace MarkdownNavigator.Domain.Services
       template = template.Replace(HtmlReplacementCodes.BaseFolder, settings.SourceFolder.Replace('\\', '/'));
 
       return template;
+    }
+
+    /// <summary>
+    /// Gets the HTML template.
+    /// </summary>
+    /// <returns></returns>
+    private string GetTempalte()
+    {
+      if (settings.EnableCustomTemplate)
+      {
+        if (File.Exists(CustomTemplatePath))
+        {
+          return File.ReadAllText(CustomTemplatePath);
+        }
+
+        ConsoleService.WriteLog($"Custom template not found \"{CustomTemplatePath}\"", LogType.Warning);
+       }
+
+      return ResourceService.GetTemplate(settings.EnableExport);
     }
   }
 }

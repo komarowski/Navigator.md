@@ -1,5 +1,5 @@
 ﻿// applicationUrl from launchSettings.json
-const url = "https://localhost:7156"
+const url = "http://localhost:7156"
 
 /**
  * Represents a person.

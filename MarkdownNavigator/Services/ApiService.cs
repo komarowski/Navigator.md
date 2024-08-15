@@ -5,7 +5,7 @@ using System.Text;
 namespace MarkdownNavigator.Services
 {
   /// <summary>
-  /// Service for API enpoints.
+  /// Service for API endpoints.
   /// </summary>
   public class ApiService
   {

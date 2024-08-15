@@ -14,7 +14,7 @@ namespace MarkdownNavigator.Tests
     public void WalkDirectoryTree(bool isExport, int filesToCopyCount)
     {
       // Arrange
-      var treeService = new TreeStructureService(new AppSettings() { SourceFolder = fixture.TestDirectory, IsExport = isExport });
+      var treeService = new TreeStructureService(new AppSettings() { SourceFolder = fixture.TestDirectory, EnableExport = isExport });
       var tree = new TreeStructure();
 
       // Act
@@ -45,7 +45,7 @@ namespace MarkdownNavigator.Tests
     public void ConvertAllHtml(bool isExport)
     {
       // Arrange
-      var appSettings = new AppSettings() { SourceFolder = fixture.TestDirectory, IsExport = isExport, IsStandalone = true };
+      var appSettings = new AppSettings() { SourceFolder = fixture.TestDirectory, EnableExport = isExport, DisableCopyAssets = true };
       var treeService = new TreeStructureService(appSettings);
       var convertService = new ConvertService(appSettings, treeService);
       var testDirectory = new DirectoryInfo(fixture.TestDirectory);

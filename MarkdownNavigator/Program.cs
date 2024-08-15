@@ -16,6 +16,7 @@ builder.Services.AddSingleton<IConvertService, ConvertService>();
 builder.Services.AddCors();
 
 var app = builder.Build();
+builder.WebHost.UseUrls("http://localhost:7156");
 app.UseCors(builder => builder
     .AllowAnyOrigin()
     .AllowAnyMethod()
@@ -32,7 +33,7 @@ using (var scope = app.Services.CreateScope())
 
   var consoleService = scope.ServiceProvider.GetService<ConsoleCommandService>();
   var settings = scope.ServiceProvider.GetService<IAppSettings>();
-  if (settings.IsWebServer)
+  if (!settings.DisableWebServer)
   {
     var apiService = scope.ServiceProvider.GetService<ApiService>();
     apiService.RegisterEndpoints(app);

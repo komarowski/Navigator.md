@@ -33,12 +33,10 @@
     <None Remove="Resources\assets\js\prism.js" />
     <None Remove="Resources\assets\logo.ico" />
     <None Remove="Resources\assets\logo.svg" />
-    <None Remove="Resources\content\index.html" />
+    <None Remove="Resources\content\help.md" />
     <None Remove="Resources\content\index.md" />
-    <None Remove="Resources\templates\absolute-standalone.html" />
-    <None Remove="Resources\templates\absolute.html" />
-    <None Remove="Resources\templates\relative-standalone.html" />
-    <None Remove="Resources\templates\relative.html" />
+    <None Remove="Resources\templates\default.html" />
+    <None Remove="Resources\templates\export.html" />
     <None Remove="Resources\test\notes\note.md" />
     <None Remove="Resources\test\programming\csharp\code.md" />
     <None Remove="Resources\test\programming\csharp\theory.md" />
@@ -50,7 +48,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\assets\logo.ico" />
-    <EmbeddedResource Include="Resources\content\index.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,11 +75,10 @@
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.woff2" />
     <EmbeddedResource Include="Resources\assets\js\main.js" />
     <EmbeddedResource Include="Resources\assets\js\prism.js" />
+    <EmbeddedResource Include="Resources\content\help.md" />
     <EmbeddedResource Include="Resources\content\index.md" />
-    <EmbeddedResource Include="Resources\templates\absolute-standalone.html" />
-    <EmbeddedResource Include="Resources\templates\absolute.html" />
-    <EmbeddedResource Include="Resources\templates\relative-standalone.html" />
-    <EmbeddedResource Include="Resources\templates\relative.html" />
+    <EmbeddedResource Include="Resources\templates\default.html" />
+    <EmbeddedResource Include="Resources\templates\export.html" />
     <EmbeddedResource Include="Resources\test\notes\note.md" />
     <EmbeddedResource Include="Resources\test\programming\csharp\code.md" />
     <EmbeddedResource Include="Resources\test\programming\csharp\theory.md" />
