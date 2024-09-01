@@ -8,10 +8,10 @@ namespace MarkdownNavigator.Tests
     public void GetSliderWithTwoImagesWithCustomHeight()
     {
       var markdownText = @"
-@@slider 300px
+!<slider> 300px
 ![image1.jpg](Text for image 1)
 ![image2.jpg](Text for image 2)
-@@
+</slider>
 ";
 
       var expectedHtml = @"
@@ -38,10 +38,10 @@ namespace MarkdownNavigator.Tests
     public void GetSliderWithTwoImagesWithDefaultHeight()
     {
       var markdownText = @"
-@@slider
+!<slider>
 ![image1.jpg](Text for image 1)
 ![image2.jpg](Text for image 2)
-@@
+</slider>
 ";
 
       var expectedHtml = @"
@@ -68,9 +68,9 @@ namespace MarkdownNavigator.Tests
     public void GetSliderWithOneImageWithDefaultHeight()
     {
       var markdownText = @"
-@@slider
+!<slider>
 ![image.jpg](Text for image 1)
-@@
+</slider>
 ";
 
       var expectedHtml = @"
@@ -91,9 +91,9 @@ namespace MarkdownNavigator.Tests
     public void GetSliderWithOneImageWithDefaultHeightWithoutText()
     {
       var markdownText = @"
-@@slider
+!<slider>
 ![image.jpg]()
-@@
+</slider>
 ";
 
       var expectedHtml = @"
@@ -111,105 +111,7 @@ namespace MarkdownNavigator.Tests
     }
 
     [Fact]
-    public void GetDetailsWithSimpleText()
-    {
-      var markdownText = @"
-@@details How we can do it?
-It's very simple.
-Some text.
-@@
-";
-
-      var expectedHtml = @"
-<details>
-<summary>How we can do it?</summary>
-<div><p>It's very simple.
-Some text.</p>
-</div>
-</details>
-";
-
-      var actualHtml = MarkdownService.ConvertToHtml(markdownText);
-
-      Assert.Equal(expectedHtml.NormalizeLineEndings().Trim(), actualHtml.NormalizeLineEndings().Trim());
-    }
-
-    [Fact]
-    public void GetDetailsWithCodeBlock()
-    {
-      var markdownText = @"
-@@details Sql query to get information about columns
-The `INFORMATION_SCHEMA.COLUMNS` view allows you to get information about all columns for all tables and views within a database.
-
-```sql
-SELECT *
-FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME='TableName'
-```
-@@
-";
-
-      var expectedHtml = @"
-<details>
-<summary>Sql query to get information about columns</summary>
-<div><p>The <code>INFORMATION_SCHEMA.COLUMNS</code> view allows you to get information about all columns for all tables and views within a database.</p>
-<pre><code class=""language-sql"">SELECT *
-FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME='TableName'
-</code></pre>
-</div>
-</details>
-";
-
-      var actualHtml = MarkdownService.ConvertToHtml(markdownText);
-
-      Assert.Equal(expectedHtml.NormalizeLineEndings().Trim(), actualHtml.NormalizeLineEndings().Trim());
-    }
-
-    [Fact]
-    public void GetNestedDetailsWithSimpleText()
-    {
-      var markdownText = @"
-@@details How we can do it?
-It's very simple.
-Some text.
-@@@details First Nested
-Nested text 1.
-@@@
-Some text between.
-@@@details Second Nested
-Nested text 2.
-@@@
-@@
-";
-
-      var expectedHtml = @"
-<details>
-<summary>How we can do it?</summary>
-<div><p>It's very simple.
-Some text.</p>
-<details>
-<summary>First Nested</summary>
-<div><p>Nested text 1.</p>
-</div>
-</details>
-<p>Some text between.</p>
-<details>
-<summary>Second Nested</summary>
-<div><p>Nested text 2.</p>
-</div>
-</details>
-</div>
-</details>
-";
-
-      var actualHtml = MarkdownService.ConvertToHtml(markdownText);
-
-      Assert.Equal(expectedHtml.NormalizeLineEndings().Trim(), actualHtml.NormalizeLineEndings().Trim());
-    }
-
-    [Fact]
-    public void GetHtmlWithTextAndSliderAndDetails()
+    public void GetHtmlWithTextAndSliderAndLink()
     {
       var markdownText = @"# Header h1
 
@@ -217,17 +119,12 @@ Some text.</p>
 
 [Github link](https://github.com/)
 
-@@slider
+!<slider>
 ![image1.jpg](Text for image 1)
 ![image2.jpg](Text for image 2)
-@@
+</slider>
 
 Some text in a paragraph.
-
-@@details How we can do it?
-It's very simple.
-Some text.
-@@
 
 Some other text in the paragraph with **bold font**.
 ";
@@ -249,12 +146,6 @@ Some other text in the paragraph with **bold font**.
 <button class=""button-slider button-slider--next""> &gt; </button>
 </div>
 <p>Some text in a paragraph.</p>
-<details>
-<summary>How we can do it?</summary>
-<div><p>It's very simple.
-Some text.</p>
-</div>
-</details>
 <p>Some other text in the paragraph with <strong>bold font</strong>.</p>
 ";
 
@@ -267,41 +158,41 @@ Some text.</p>
     public void GetTwoTabsPanelWithSimpleText()
     {
       var markdownText = @"
-@@tabs tabs
-@@@tab First tab
+!<tabs>
+<tab> First tab
 ### First tab
 Some Text.
-@@@tab Second tab
+<tab> Second tab
 ### Second tab
 Some Text.
-@@@tab Third tab
+<tab> Third tab
 ### Third tab
 Some Text.
-@@
+</tabs>
 Some text between.
-@@tabs tabs2
-@@@tab First tab
+!<tabs> secondTabsName
+<tab> First tab
 ### First tab
 Some Text.
-@@
+</tabs>
 ";
 
       var expectedHtml = @"
 <div class=""tabs"">
-<input class=""input"" name=""tabs"" type=""radio"" id=""tabs-1"" checked=""checked""/>
-<label class=""label"" for=""tabs-1"">First tab</label>
+<input class=""input"" name=""default"" type=""radio"" id=""default-1"" checked=""checked""/>
+<label class=""label"" for=""default-1"">First tab</label>
 <div class=""panel"">
 <h3 id=""first-tab"">First tab</h3>
 <p>Some Text.</p>
 </div>
-<input class=""input"" name=""tabs"" type=""radio"" id=""tabs-2""/>
-<label class=""label"" for=""tabs-2"">Second tab</label>
+<input class=""input"" name=""default"" type=""radio"" id=""default-2""/>
+<label class=""label"" for=""default-2"">Second tab</label>
 <div class=""panel"">
 <h3 id=""second-tab"">Second tab</h3>
 <p>Some Text.</p>
 </div>
-<input class=""input"" name=""tabs"" type=""radio"" id=""tabs-3""/>
-<label class=""label"" for=""tabs-3"">Third tab</label>
+<input class=""input"" name=""default"" type=""radio"" id=""default-3""/>
+<label class=""label"" for=""default-3"">Third tab</label>
 <div class=""panel"">
 <h3 id=""third-tab"">Third tab</h3>
 <p>Some Text.</p>
@@ -309,8 +200,8 @@ Some Text.
 </div>
 <p>Some text between.</p>
 <div class=""tabs"">
-<input class=""input"" name=""tabs2"" type=""radio"" id=""tabs2-1"" checked=""checked""/>
-<label class=""label"" for=""tabs2-1"">First tab</label>
+<input class=""input"" name=""secondTabsName"" type=""radio"" id=""secondTabsName-1"" checked=""checked""/>
+<label class=""label"" for=""secondTabsName-1"">First tab</label>
 <div class=""panel"">
 <h3 id=""first-tab"">First tab</h3>
 <p>Some Text.</p>

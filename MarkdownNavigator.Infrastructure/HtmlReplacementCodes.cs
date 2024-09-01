@@ -8,21 +8,21 @@
     /// <summary>
     /// Adds base folder for all relative URLs in a template. 
     /// </summary>
-    public const string BaseFolder = "{@BaseFolder}";
+    public const string RelativePath = "{@RelativePath}";
 
     /// <summary>
-    /// &lt;div id="tree-view" data-file="{@FileCode}" data-path="{@MarkdownPath}" class="tree-view"&gt;
+    /// &lt;div id="tree-view" data-file="{@CurrentNodeId}" class="tree-view"&gt;
     /// </summary>
-    public const string HtmlCode = "{@FileCode}";
-
-    /// <summary>
-    /// &lt;div id="tree-view" data-file="{@FileCode}" data-path="{@MarkdownPath}" class="tree-view"&gt;
-    /// </summary>
-    public const string MarkdownPath = "{@MarkdownPath}";
+    public const string CurrentNodeId = "{@CurrentNodeId}";
 
     /// <summary>
     /// &lt;div id="blog" class="blog"&gt;{@MainBody}&lt;/div&gt;
     /// </summary>
     public const string MainBody = "{@MainBody}";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public const string EditLink = "{@EditLink}";
   }
 }

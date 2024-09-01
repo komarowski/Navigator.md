@@ -16,7 +16,6 @@
     /// Converting markdown file to html and save.
     /// </summary>
     /// <param name="markdownPath">Markdown file path.</param>
-    /// <param name="code">Path code.</param>
-    public void ConvertHtml(string markdownPath, string? code = null);
+    public void ConvertHtml(string markdownPath);
   }
 }

@@ -15,12 +15,10 @@ namespace MarkdownNavigator.Infrastructure.Services
     /// <summary>
     /// Gets html tempalte.
     /// </summary>
-    /// <param name="isExport">Export mode.</param>
     /// <returns>Html tempalte.</returns>
-    public static string GetTemplate(bool isExport)
+    public static string GetTemplate()
     {
-      var templateName = isExport ? "export" : "default";
-      var resourceName = GetFullResourceName($"templates.{templateName}.html");
+      var resourceName = GetFullResourceName($"templates.default.html");
       return GetEmbeddedResource(resourceName);
     }
 

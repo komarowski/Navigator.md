@@ -8,13 +8,13 @@ namespace MarkdownNavigator.Domain.MarkdownExtensions
   /// </summary>
   public class TabsBlockParser : BlockParser
   {
-    private const string TabsBlockStart = "@@tabs";
-    private const string TabBlockStart = "@@@tab";
-    private const string TabsBlockEnd = "@@";
+    private const string TabsBlockStart = "!<tabs>";
+    private const string TabBlockStart = "<tab>";
+    private const string TabsBlockEnd = "</tabs>";
 
     public TabsBlockParser()
     {
-      OpeningCharacters = ['@'];
+      OpeningCharacters = ['!'];
     }
 
     public override BlockState TryOpen(BlockProcessor processor)
@@ -24,9 +24,11 @@ namespace MarkdownNavigator.Domain.MarkdownExtensions
 
       if (content.StartsWith(TabsBlockStart))
       {
+        var tabsName = content[TabsBlockStart.Length..].Trim();
+        tabsName = string.IsNullOrEmpty(tabsName) ? "default" : tabsName;
         var tabsBlock = new TabsBlock(this)
         {
-          Name = content[TabsBlockStart.Length..].Trim()
+          Name = tabsName
         };
 
         processor.NewBlocks.Push(tabsBlock);

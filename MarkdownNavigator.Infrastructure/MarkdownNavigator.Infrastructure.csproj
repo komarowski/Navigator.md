@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <None Remove="Resources\assets\css\prism.css" />
-    <None Remove="Resources\assets\css\styles.css" />
+    <None Remove="Resources\assets\css\style.css" />
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.eot" />
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.ttf" />
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.woff" />
@@ -36,7 +36,6 @@
     <None Remove="Resources\content\help.md" />
     <None Remove="Resources\content\index.md" />
     <None Remove="Resources\templates\default.html" />
-    <None Remove="Resources\templates\export.html" />
     <None Remove="Resources\test\notes\note.md" />
     <None Remove="Resources\test\programming\csharp\code.md" />
     <None Remove="Resources\test\programming\csharp\theory.md" />
@@ -52,7 +51,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\assets\css\prism.css" />
-    <EmbeddedResource Include="Resources\assets\css\styles.css" />
+    <EmbeddedResource Include="Resources\assets\css\style.css" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.eot" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.ttf" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.woff" />
@@ -78,7 +77,6 @@
     <EmbeddedResource Include="Resources\content\help.md" />
     <EmbeddedResource Include="Resources\content\index.md" />
     <EmbeddedResource Include="Resources\templates\default.html" />
-    <EmbeddedResource Include="Resources\templates\export.html" />
     <EmbeddedResource Include="Resources\test\notes\note.md" />
     <EmbeddedResource Include="Resources\test\programming\csharp\code.md" />
     <EmbeddedResource Include="Resources\test\programming\csharp\theory.md" />

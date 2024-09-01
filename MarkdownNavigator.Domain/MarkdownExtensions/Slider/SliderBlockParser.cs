@@ -8,8 +8,8 @@ namespace MarkdownNavigator.Domain.MarkdownExtensions
   /// </summary>
   public class SliderBlockParser : BlockParser
   {
-    private const string SliderBlockStart = "@@slider";
-    private const string SliderBlockEnd = "@@";
+    private const string SliderBlockStart = "!<slider>";
+    private const string SliderBlockEnd = "</slider>";
     private const string SliderBlockDefaultHeight = "350px";
     private const string ImageUrlStart = "![";
     private const char ImageUrlEnd = ']';
@@ -18,7 +18,7 @@ namespace MarkdownNavigator.Domain.MarkdownExtensions
 
     public SliderBlockParser()
     {
-      OpeningCharacters = ['@'];
+      OpeningCharacters = ['!'];
     }
 
     public override BlockState TryOpen(BlockProcessor processor)
