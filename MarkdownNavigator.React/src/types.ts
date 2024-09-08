@@ -5,5 +5,11 @@ export interface ResultTextDTO {
 }
 
 export interface IEditorState {
-  previewMode: boolean;
+  editorMode: string;
+}
+
+export interface IContextMenuState {
+  isVisible: boolean;
+  x: number;
+  y: number;
 }

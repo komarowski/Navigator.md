@@ -1,4 +1,4 @@
-/* Base Styles
+﻿/* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 @font-face {
@@ -318,6 +318,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     max-width: 100%;
+    max-height: 300px;
   }
 
   .blog code {
@@ -325,12 +326,29 @@ body {
     border-radius: 4px;
     padding: 1px 2px;
     font-weight: bolder;
+    cursor: pointer;
   }
 
-  .blog pre code {
-    padding: 0px;
-    font-weight: normal;
+    .blog code:active {
+      outline: 2px solid var(--icon)
+    }
+
+  .blog pre {
+    cursor: pointer;
   }
+
+    .blog pre:active {
+      outline: 3px dashed var(--icon)
+    }
+
+    .blog pre code {
+      padding: 0px;
+      font-weight: normal;
+    }
+
+      .blog pre code:active {
+        background-color: var(--code);
+      }
 
   .blog details {
     background: var(--details);
@@ -419,7 +437,7 @@ body {
   }
 
   .tabs .label {
-    padding: 12px 18px;
+    padding: 6px 9px;
     background: var(--border);
     cursor: pointer;
     font-size: 18px;
@@ -430,7 +448,8 @@ body {
     width: 100%;
     order: 99;
     display: none;
-    padding: 10px 10px;
+    padding: 2px 5px;
+    box-sizing: border-box;
   }
 
   .tabs .label:hover {
@@ -445,6 +464,7 @@ body {
     font-weight: bold;
     background: var(--code);
     color: var(--link-hover);
+    outline: 2px solid var(--link-hover);
   }
 
     .tabs .input:checked + .label + .panel {

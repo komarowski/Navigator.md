@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { ContextMenuActions } from '../../constants';
+import "./context-menu.css";
 
 interface IProps {
   x: number;
@@ -32,19 +34,11 @@ const ContextMenu: React.FunctionComponent<IProps> = ({ x, y, isVisible, onClose
     <div
       ref={menuRef}
       className="context-menu"
-      style={{
-        position: 'absolute',
-        top: `${y}px`,
-        left: `${x}px`,
-        backgroundColor: '#fff',
-        border: '1px solid #ccc',
-        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
-        zIndex: 100,
-      }}
+      style={{ top: `${y}px`, left: `${x}px`}}
     >
-      <ul style={{ listStyle: 'none', padding: '5px 10px', margin: 0 }}>
-        <li onClick={() => onAction('Insert Details block')}>Insert Details block</li>
-        <li onClick={() => onAction('Insert Code block')}>Insert Code block</li>
+      <ul>
+        <li onClick={() => onAction(ContextMenuActions.SAVE)}>Save</li>
+        <li onClick={() => onAction(ContextMenuActions.PASTEIMAGE)}>Paste image</li>
       </ul>
     </div>
   );

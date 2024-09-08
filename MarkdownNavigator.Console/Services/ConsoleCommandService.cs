@@ -24,7 +24,7 @@ namespace MarkdownNavigator.Console.Services
 
         if (EqualsAnyCommand(input, "r", "refresh"))
         {
-          updatedFilesNumber = convertService.ConvertAllHtml(true);
+          updatedFilesNumber = convertService.ConvertAllHtml();
           ConsoleService.WriteLog($"Updated or added {updatedFilesNumber} files.", LogType.Info);
           continue;
         }

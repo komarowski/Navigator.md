@@ -5,9 +5,6 @@ import {
   RouterProvider
 } from "react-router-dom";
 import EditPage from './components/pages/edit-page';
-import "./assets/css/style.css";
-import "./assets/css/style-react.css";
-
 
 
 const router = createBrowserRouter([

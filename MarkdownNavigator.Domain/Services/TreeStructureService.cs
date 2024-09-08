@@ -42,9 +42,14 @@ namespace MarkdownNavigator.Domain.Services
           {
             continue;
           }
-          var nodeId = GetNodeId(subDir.FullName);
+          
           var parentNode = tree.CurrentNode;
-          tree.CurrentNode = tree.AddFolderNode(nodeId, subDir.Name);
+          if (!IsIgnoreNode(subDir.Name))
+          {
+            var nodeId = GetNodeId(subDir.FullName);
+            tree.CurrentNode = tree.AddFolderNode(nodeId, subDir.Name);
+          }
+
           tree = WalkDirectoryTree(subDir, tree, refreshAll);
           tree.CurrentNode = parentNode;
         }
@@ -87,7 +92,7 @@ namespace MarkdownNavigator.Domain.Services
         }
 
         if (excludeFromTreeViewFiles.Contains(file.Name) 
-          || file.Directory!.Name.StartsWith('_'))
+          || IsIgnoreNode(file.Directory!.Name))
         {
           return;
         }
@@ -106,6 +111,16 @@ namespace MarkdownNavigator.Domain.Services
     private string GetRelativePath(string path)
     {
       return Path.GetRelativePath(settings.SourceFolder, path);
+    }
+
+    /// <summary>
+    /// Checks that the node is not displayed in the tree view.
+    /// </summary>
+    /// <param name="folderName">Node folder name.</param>
+    /// <returns>True if the node should be ignored.</returns>
+    private static bool IsIgnoreNode(string folderName)
+    {
+      return folderName.StartsWith('_');
     }
 
     /// <summary>

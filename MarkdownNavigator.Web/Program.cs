@@ -13,6 +13,7 @@ builder.Services.AddSingleton<IConvertService, ConvertService>();
 builder.Services.AddScoped<ApiService>();
 
 var app = builder.Build();
+builder.WebHost.UseUrls("https://localhost:7024");
 
 using (var scope = app.Services.CreateScope())
 {

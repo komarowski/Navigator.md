@@ -1,5 +1,6 @@
 ﻿using MarkdownNavigator.Domain.Entities;
 using MarkdownNavigator.Domain.Services;
+using MarkdownNavigator.Infrastructure.Services;
 using MarkdownNavigator.Web.DTO;
 using System.Text;
 
@@ -16,6 +17,12 @@ namespace MarkdownNavigator.Web.Services
     /// <param name="app">WebApplication</param>
     public void RegisterEndpoints(WebApplication app)
     {
+      app.MapGet($"api/html", () => {
+        var helpHtml = MarkdownService.ConvertToHtml(ResourceService.GetHelpMdContent());
+
+        return new ResultTextDTO() { Text = helpHtml };
+      });
+
       app.MapPost($"api/html", (MarkdownToHtmlDTO markdown) => {
         if (markdown is null || string.IsNullOrEmpty(markdown.Text))
         {
@@ -59,6 +66,44 @@ namespace MarkdownNavigator.Web.Services
 
         await File.WriteAllTextAsync(fullPath, markdown.Text, Encoding.UTF8);
         convertService.ConvertHtml(fullPath);
+
+        return new ResultTextDTO();
+      });
+
+      app.MapPost($"api/image", async (HttpRequest request, IAppSettings settings) =>
+      {
+        if (!request.HasFormContentType || !request.Form.Files.Any() || !request.Form.ContainsKey("markdownPath"))
+        {
+          return new ResultTextDTO("No file or path parameter provided.", true);
+        }
+
+        var file = request.Form.Files["image"];
+        var path = request.Form["markdownPath"].FirstOrDefault();
+
+        if (file == null || file.Length == 0)
+        {
+          return new ResultTextDTO("Empty file.", true);
+        }
+
+        if (string.IsNullOrEmpty(path))
+        {
+          return new ResultTextDTO("Empty markdown path.", true);
+        }
+
+        var fullMarkdownPath = Path.Combine(settings.SourceFolder, path);
+        var markdownFile = new FileInfo(fullMarkdownPath);
+
+        if (!markdownFile.Exists)
+        {
+          return new ResultTextDTO("Markdown file does not exist.", true);
+        }
+
+        var fullImagePath = Path.Combine(markdownFile.DirectoryName, file.FileName);
+
+        using (var stream = new FileStream(fullImagePath, FileMode.Create))
+        {
+          await file.CopyToAsync(stream);
+        }
 
         return new ResultTextDTO();
       });
