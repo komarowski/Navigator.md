@@ -38,8 +38,8 @@ bld/
 .vs/
 
 # Static files
-public/assets/
-wwwroot/
+wwwroot
+/MarkdownNavigator.React/public/assets
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
