@@ -1,13 +1,9 @@
-﻿// applicationUrl from launchSettings.json
-const url = "http://localhost:7156"
-
-/**
+﻿/**
  * Represents a person.
  * @typedef {Object} NodeType
- * @property {string} Id Node Id.
+ * @property {string} Id Node Id (path).
  * @property {string} Name Node name.
  * @property {string} Type Node type: "File"|"Folder".
- * @property {string | null} Link Link to file local file location for "File" node.
  * @property {Array<NodeType> | null} Children List of children nodes.
  */
 
@@ -26,11 +22,40 @@ const isElementExist = (element, name) => {
 }
 
 /**
+ * Calculates the relative path between two node paths.
+ * @param {string} nodePathFrom Source node path.
+ * @param {string} nodePathTo Target node path.
+ * @returns Path from the first node to the second.
+ */
+const getRelativePath = (nodePathFrom, nodePathTo) => {
+  const pathPartsFrom = nodePathFrom.split('/').slice(0, -1);
+  const pathPartsTo = nodePathTo.split('/');
+
+  // Find the first index where the paths differ
+  let commonBaseIndex  = 0;
+  while (commonBaseIndex < pathPartsFrom.length
+    && commonBaseIndex < pathPartsTo.length
+    && pathPartsFrom[commonBaseIndex] === pathPartsTo[commonBaseIndex])
+  {
+    commonBaseIndex++;
+  }
+
+  // Navigate up from the `from` path to the common base directory
+  const stepsUp = "../".repeat(pathPartsFrom.length - commonBaseIndex);
+
+  // Navigate down to the `to` path from the common base
+  const stepsDown = pathPartsTo.slice(commonBaseIndex).join('/');
+
+  return `${stepsUp}${stepsDown}`;
+}
+
+/**
  * Generates HTML from JSON data with a tree structure.
  * @param {Array<NodeType>} nodeList List of nodes in root folder.
+ * @param {string} currentNodeId Current node Id (path).
  * @returns {string} HTML tree structure.
  */
-const generateHtmlTree = (nodeList) => {
+const generateHtmlTree = (nodeList, currentNodeId) => {
   if (!nodeList || nodeList.length === 0) {
     return "";
   }
@@ -38,18 +63,52 @@ const generateHtmlTree = (nodeList) => {
   let result = "";
   for (const node of nodeList) {
     if (node.Type === "Folder" && node.Children && node.Children.length !== 0) {
-      result += `<details id="${node.Id}__"><summary>${node.Name}</summary><div class="tree-view-group">`;
-      result += generateHtmlTree(node.Children);
-      result += '</div></details>';
+      result += `<details id="${node.Id}/"><summary>${node.Name}</summary><div class="tree-view-group">`;
+      result += generateHtmlTree(node.Children, currentNodeId);
+      result += "</div></details>";
     } else if (node.Type === "File") {
-      result += `<a id="${node.Id}" href="${node.Link}" class="tree-view-item">${node.Name}</a>`;
+      const nodeLink = currentNodeId
+        ? getRelativePath(currentNodeId, node.Id)
+        : node.Id;
+
+      result += `<a id="${node.Id}" href="${nodeLink}" class="tree-view-item">${node.Name}</a>`;
     }
   }
   return result;
 }
 
 /**
- * Sets the Tree View to highlight the currently open file and open all subfolders in that file's path.
+ * Opens all subfolders in node's path and highlight the currently open node.
+ * @param {HTMLElement} treeView Tree view element.
+ * @param {string} currentNodeId Current node Id (path).
+ */
+const openFolderNodes = (treeView, currentNodeId) => {
+  if (currentNodeId) {
+    const currentFileNode = document.getElementById(currentNodeId);
+    if (currentFileNode) {
+      currentFileNode.classList.add("tree-view-item-current");
+      const indexes = [...currentNodeId.matchAll(new RegExp("/", "gi"))].map(a => a.index);
+      indexes.forEach(index => {
+        const folderId = currentNodeId.slice(0, index + 1);
+        let folderNode = document.getElementById(folderId);
+        if (folderNode) {
+          folderNode.open = true;
+        }
+      });
+
+      return;
+    }
+  }
+
+  // opens all folders if there is no nodeId (index page)
+  const details = Array.from(treeView.querySelectorAll("details"))
+  details.forEach(element => {
+    element.open = true;
+  });
+}
+
+/**
+ * Sets the Tree View.
  * @param {Array<NodeType>} nodeList List of nodes in root folder.
  */
 const setUpTree = (nodeList) => {
@@ -63,25 +122,9 @@ const setUpTree = (nodeList) => {
     return;
   }
 
-  treeView.innerHTML = generateHtmlTree(nodeList);
-  const file = treeView.dataset.file;
-  const currentFile = document.getElementById(file);
-  if (currentFile) {
-    currentFile.classList.add("tree-view-item-current");
-    const indexes = [...file.matchAll(new RegExp("__", "gi"))].map(a => a.index);
-    indexes.forEach(index => {
-      const folderId = file.slice(0, index + 2);
-      let folderElement = document.getElementById(folderId);
-      if (folderElement) {
-        folderElement.open = true;
-      }
-    });
-  } else {
-    const details = Array.from(treeView.querySelectorAll("details"))
-    details.forEach(element => {
-      element.open = true;
-    });
-  }
+  const currentNodeId = treeView.dataset.node;
+  treeView.innerHTML = generateHtmlTree(nodeList, currentNodeId);
+  openFolderNodes(treeView, currentNodeId);
 }
 
 /**
@@ -129,108 +172,15 @@ const setUpSidebar = () => {
 }
 
 /**
- * Sets the current slide.
- */
-const setSlides = (slides, currentSlide) => {
-  slides.forEach((slide, indx) => {
-    slide.style.transform = `translateX(${(indx - currentSlide) * 100}%)`;
-  });
-}
-
-/**
- * Sets slide switching.
- */
-const setSlider = () => {
-  document.querySelectorAll(".slider").forEach((slider) => {
-    const slides = slider.querySelectorAll(".slide");
-    const nextSlide = slider.querySelector(".button-slider--next");
-    const prevSlide = slider.querySelector(".button-slider--prev");
-    const maxSlideIndex = slides.length - 1;
-    let currentSlideIndex = 0;
-    if (nextSlide) {
-      nextSlide.onclick = () => {
-        currentSlideIndex = (currentSlideIndex === maxSlideIndex) ? 0 : currentSlideIndex + 1;
-        setSlides(slides, currentSlideIndex);
-      };
-    }
-    if (prevSlide) {
-      prevSlide.onclick = () => {
-        currentSlideIndex = (currentSlideIndex === 0) ? maxSlideIndex : currentSlideIndex - 1;
-        setSlides(slides, currentSlideIndex);
-      };
-    }
-    setSlides(slides, 0);
-  });
-}
-
-
-/**
- * Specifies the logic for editing the markdown file.
- */
-const setUpModalButtons = () => {
-  const treeView = document.getElementById("tree-view");
-  const modal = document.getElementById("modal");
-  const textarea = document.getElementById("textarea");
-  const btnGet = document.getElementById("btn-markdown-get");
-  const btnPost = document.getElementById("btn-markdown-post");
-  const btnClose = document.getElementById("btn-modal-close");
-
-  if (!isElementExist(treeView, "tree-view") ||
-    !isElementExist(btnGet, "modal") ||
-    !isElementExist(btnPost, "btn-markdown-get") ||
-    !isElementExist(btnPost, "btn-markdown-post") ||
-    !isElementExist(btnClose, "btn-modal-close") ||
-    !isElementExist(textarea, "textarea") ||
-    !isElementExist(modal, "modal")) {
-    return;
-  }
-
-  const path = treeView.dataset.path;
-  btnGet.onclick = async () => {
-    if (path) {
-      const response = await fetch(`${url}/markdown?path=${path}`);
-      if (response.ok) {
-        const text = await response.text();
-        textarea.value = text;
-      }
-      modal.style.display = "block";
-    } else {
-      console.log("markdown path not found")
-    }
-  }
-
-  btnPost.onclick = async () => {
-    const response = await fetch(`${url}/markdown`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          Path: path,
-          Text: textarea.value
-        })
-      }
-    );
-    if (response.ok) {
-      window.location.reload();
-    }
-  }
-
-  btnClose.onclick = () => {
-    modal.style.display = "none";
-  }
-}
-
-/**
  * Entry point function.
  * @param {Array<NodeType>} nodeList List of nodes in root folder.
  */
 const main = (nodeList) => {
   setUpTree(nodeList);
-  setUpModalButtons();
   setUpContentTable();
   setUpSidebar();
-  setSlider();
+  applyCodeCopy();
 }
 
-// "nodeList" is taken from "treeData.js"
+// "nodeList" is taken from "tree.js"
 main(nodeList);

@@ -10,9 +10,6 @@ namespace MarkdownNavigator.Domain.Services
   {
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
       .UseAdvancedExtensions()
-      .Use<DetailsExtension>()
-      .Use<NestedDetailsExtension>()
-      .Use<SliderExtension>()
       .Use<CustomLinkExtension>()
       .Use<TabsExtension>()
       .Build();

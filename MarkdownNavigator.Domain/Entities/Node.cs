@@ -12,7 +12,7 @@
   public class Node
   {
     /// <summary>
-    /// Node Id.
+    /// Node Id (html relative path).
     /// </summary>
     public string Id { get; set; }
 
@@ -27,29 +27,19 @@
     public string Type { get; set; }
 
     /// <summary>
-    /// Local file location for <see cref="NodeType.File"/> or null for <see cref="NodeType.Folder"/>.
-    /// </summary>
-    public string? Link { get; set; }
-
-    /// <summary>
     /// Nodes in a folder for <see cref="NodeType.Folder"/> or null for <see cref="NodeType.File"/>.
     /// </summary>
     public List<Node>? Children { get; set; }
 
-    public Node(string id, string name, string type)
+    public Node(string id, string name, NodeType type)
     {
       Id = id;
       Name = name;
-      Type = type;
-      Children = [];
-    }
-
-    public Node(string id, string name, string type, string link)
-    {
-      Id = id;
-      Name = name;
-      Type = type;
-      Link = link;
+      Type = type.ToString();
+      if (type == NodeType.Folder)
+      {
+        Children = [];
+      }
     }
   }
 }

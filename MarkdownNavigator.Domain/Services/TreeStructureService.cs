@@ -8,11 +8,9 @@ namespace MarkdownNavigator.Domain.Services
   {
     private readonly IAppSettings settings = settings;
 
-    private readonly string[] excludeFolders = [FolderReservedNames.AssetsFolder, FolderReservedNames.ExportFolder];
+    private readonly string[] excludeFolders = [FolderReservedNames.AssetsFolder];
 
-    private readonly string[] excludeFileExtensions = [".js", ".html", ".css"];
-
-    private readonly string[] excludeMarkdownFiles = ["index.md", "help.md"];
+    private readonly string[] excludeFromTreeViewFiles = ["index.md", "help.md"];
 
     public TreeStructure WalkDirectoryTree(DirectoryInfo root, TreeStructure tree, bool refreshAll)
     {
@@ -44,9 +42,14 @@ namespace MarkdownNavigator.Domain.Services
           {
             continue;
           }
-          var folderCode = GetPathCode(subDir.FullName);
+          
           var parentNode = tree.CurrentNode;
-          tree.CurrentNode = tree.AddFolderNode(folderCode, subDir.Name);
+          if (!IsIgnoreNode(subDir.Name))
+          {
+            var nodeId = GetNodeId(subDir.FullName);
+            tree.CurrentNode = tree.AddFolderNode(nodeId, subDir.Name);
+          }
+
           tree = WalkDirectoryTree(subDir, tree, refreshAll);
           tree.CurrentNode = parentNode;
         }
@@ -55,14 +58,19 @@ namespace MarkdownNavigator.Domain.Services
       return tree;
     }
 
-    public string GetPathCode(string path)
+    public string GetNodeId(string path)
     {
-      path = path.Replace(ExtensionService.ExtensionMarkdown, string.Empty);
-      var relativePath = GetRelativePath(path);
-      return relativePath
-        .ToLower()
-        .Replace(' ', '-')
-        .Replace("\\", "__");
+      var htmlPath = FileExtensionService.MarkdownToHtml(path);
+      var relativePath = GetRelativePath(htmlPath);
+      return relativePath.Replace("\\", "/");
+    }
+
+    public string GetRelativePathForNode(string markdownPath)
+    {
+      var result = Path.GetRelativePath(markdownPath, settings.SourceFolder).Replace("\\", "/");
+      return result.Length <= 2
+        ? string.Empty
+        : result[..^2];
     }
 
     /// <summary>
@@ -73,44 +81,25 @@ namespace MarkdownNavigator.Domain.Services
     /// <param name="forceRefreshAll">Update all files anyway.</param>
     private void ProcessFile(FileInfo file, TreeStructure tree, bool forceRefreshAll)
     {
-      if (file.Extension == ExtensionService.ExtensionMarkdown)
+      if (file.Extension == FileExtensionService.ExtensionMarkdown)
       {
-        var htmlCode = GetPathCode(file.FullName);
-        var htmlFile = settings.EnableExport
-          ? new FileInfo(Path.Combine(settings.SourceFolder, FolderReservedNames.ExportFolder, ExtensionService.GetHtml(htmlCode)))
-          : new FileInfo(ExtensionService.MarkdownToHtml(file.FullName));
-
+        var htmlFile = new FileInfo(FileExtensionService.MarkdownToHtml(file.FullName));
         if (!htmlFile.Exists
           || file.LastWriteTimeUtc > htmlFile.LastWriteTimeUtc
           || forceRefreshAll)
         {
-          tree.AddMarkdownToUpdate(file.FullName, htmlCode);
+          tree.AddMarkdownToUpdate(file.FullName);
         }
 
-        if (excludeMarkdownFiles.Contains(file.Name))
+        if (excludeFromTreeViewFiles.Contains(file.Name) 
+          || IsIgnoreNode(file.Directory!.Name))
         {
           return;
         }
 
+        var nodeId = GetNodeId(file.FullName);
         var title = GetFileTitle(file);
-        var href = settings.EnableExport
-          ? ExtensionService.GetHtml(htmlCode)
-          : "file:///" + htmlFile.FullName.Replace('\\', '/');
-        tree.AddFileNode(htmlCode, title, href);
-
-        return;
-      }
-
-      if (settings.EnableExport && !excludeFileExtensions.Contains(file.Extension))
-      {
-        var targetPath = Path.Combine(settings.SourceFolder, FolderReservedNames.ExportFolder, file.Name);
-        var targetFile = new FileInfo(targetPath);
-        if (!targetFile.Exists
-          || file.LastWriteTimeUtc > targetFile.LastWriteTimeUtc
-          || forceRefreshAll)
-        {
-          tree.FilesToCopy.Add(new ImageFile(targetPath, file.FullName));
-        }
+        tree.AddFileNode(nodeId, title);
       }
     }
 
@@ -122,6 +111,16 @@ namespace MarkdownNavigator.Domain.Services
     private string GetRelativePath(string path)
     {
       return Path.GetRelativePath(settings.SourceFolder, path);
+    }
+
+    /// <summary>
+    /// Checks that the node is not displayed in the tree view.
+    /// </summary>
+    /// <param name="folderName">Node folder name.</param>
+    /// <returns>True if the node should be ignored.</returns>
+    private static bool IsIgnoreNode(string folderName)
+    {
+      return folderName.StartsWith('_');
     }
 
     /// <summary>

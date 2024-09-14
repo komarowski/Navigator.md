@@ -18,44 +18,37 @@ namespace MarkdownNavigator.Domain.Entities
     /// <summary>
     /// List of markdown files to convert to html.
     /// </summary>
-    public List<MarkdownFile> MdFilesToConvert { get; }
-
-    /// <summary>
-    /// List of markdown files to convert to html.
-    /// </summary>
-    public List<ImageFile> FilesToCopy { get; set; }
+    public List<string> MdFilesToConvert { get; }
 
     /// <summary>
     /// Storing information about the folder structure.
     /// </summary>
     public TreeStructure()
     {
-      this.RootNode = new Node("", "root", "");
+      this.RootNode = new Node("", "root", NodeType.Folder);
       this.CurrentNode = RootNode;
       this.MdFilesToConvert = [];
-      this.FilesToCopy = [];
     }
 
     /// <summary>
     /// Add file node to tree view.
     /// </summary>
-    /// <param name="filePath">Absolute file path.</param>
-    /// <param name="fileCode">File code.</param>
-    /// <param name="title">File title.</param>
-    public void AddFileNode(string fileCode, string title, string href)
+    /// <param name="nodeId">Node id.</param>
+    /// <param name="name">Node name.</param>
+    public void AddFileNode(string nodeId, string name)
     {
-      var node = new Node(fileCode, title, NodeType.File.ToString(), href);
+      var node = new Node(nodeId, name, NodeType.File);
       this.CurrentNode.Children!.Add(node);
     }
 
     /// <summary>
     /// Add start of folder block.
     /// </summary>
-    /// <param name="folderCode">Folder code.</param>
+    /// <param name="nodeId">Folder code.</param>
     /// <param name="folderName">Folder name.</param>
-    public Node AddFolderNode(string folderCode, string folderName)
+    public Node AddFolderNode(string nodeId, string folderName)
     {
-      var node = new Node(folderCode, folderName, NodeType.Folder.ToString());
+      var node = new Node(nodeId, folderName, NodeType.Folder);
       this.CurrentNode.Children!.Add(node);
       return node;
     }
@@ -64,10 +57,9 @@ namespace MarkdownNavigator.Domain.Entities
     /// Add a markdown to files to generate list.
     /// </summary>
     /// <param name="markdownPath">Markdown path.</param>
-    /// <param name="code">File code.</param>
-    public void AddMarkdownToUpdate(string markdownPath, string code)
+    public void AddMarkdownToUpdate(string markdownPath)
     {
-      this.MdFilesToConvert.Add(new MarkdownFile { Code = code, SourcePath = markdownPath });
+      this.MdFilesToConvert.Add(markdownPath);
     }
   }
 }

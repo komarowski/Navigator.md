@@ -39,7 +39,8 @@ namespace MarkdownNavigator.Infrastructure.Services
       AnsiConsole.Write(new Rule("Commands:").LeftJustified());
       var rows = new List<Markup>()
       {
-        new("[darkcyan bold] refresh (r)[/] - force refresh all html files"),
+        new("[darkcyan bold] refresh (r)[/] - refresh all html files"),
+        new("[darkcyan bold] hard refresh (h)[/] - hard refresh all html files"),
         new("[darkcyan bold] watch (w)[/] - start FileSystemWatcher"),
         new("[darkcyan bold] stop (s)[/] - stop FileSystemWatcher"),
         new("[darkcyan bold] exit (e)[/] - exit program")

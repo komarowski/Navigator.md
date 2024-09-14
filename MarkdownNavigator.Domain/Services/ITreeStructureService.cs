@@ -17,10 +17,17 @@ namespace MarkdownNavigator.Domain.Services
     public TreeStructure WalkDirectoryTree(DirectoryInfo root, TreeStructure tree, bool forceRefreshAll);
 
     /// <summary>
-    /// Get code from markdown or folder full path.
+    /// Get node id from markdown or folder full path.
     /// </summary>
     /// <param name="path">Markdown or folder full path.</param>
-    /// <returns>Code.</returns>
-    public string GetPathCode(string path);
+    /// <returns>Node id.</returns>
+    public string GetNodeId(string path);
+
+    /// <summary>
+    /// Get relative path to root folder.
+    /// </summary>
+    /// <param name="markdownPath">Node full markdown path.</param>
+    /// <returns>Relative path to root folder.</returns>
+    public string GetRelativePathForNode(string markdownPath);
   }
 }

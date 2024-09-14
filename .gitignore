@@ -36,8 +36,10 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
-# Uncomment if you have tasks that create the project's static files in wwwroot
-#wwwroot/
+
+# Static files
+wwwroot
+/MarkdownNavigator.React/public/assets
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
@@ -60,6 +62,7 @@ dlldata.c
 BenchmarkDotNet.Artifacts/
 
 # .NET
+dotnet-tools.json
 project.lock.json
 project.fragment.lock.json
 artifacts/
@@ -288,6 +291,7 @@ FakesAssemblies/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
+build/
 
 # Visual Studio 6 build log
 *.plg
