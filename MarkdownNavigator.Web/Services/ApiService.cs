@@ -17,12 +17,14 @@ namespace MarkdownNavigator.Web.Services
     /// <param name="app">WebApplication</param>
     public void RegisterEndpoints(WebApplication app)
     {
+      // Gets the HTML content for the help page.
       app.MapGet($"api/html", () => {
         var helpHtml = MarkdownService.ConvertToHtml(ResourceService.GetHelpMdContent());
 
         return new ResultTextDTO() { Text = helpHtml };
       });
 
+      // Gets the HTML content from Markdown for live HTML preview.
       app.MapPost($"api/html", (MarkdownToHtmlDTO markdown) => {
         if (markdown is null || string.IsNullOrEmpty(markdown.Text))
         {
@@ -34,6 +36,7 @@ namespace MarkdownNavigator.Web.Services
         return new ResultTextDTO() { Text = html };
       });
 
+      // Gets the Markdown content from the specified path.
       app.MapGet($"api/markdown", async (string? path, IAppSettings settings) => {
         if (string.IsNullOrEmpty(path))
         {
@@ -51,6 +54,7 @@ namespace MarkdownNavigator.Web.Services
         return new ResultTextDTO(markdown);
       });
 
+      // Updates the Markdown file and regenerates its corresponding HTML.
       app.MapPost($"api/markdown", async (MarkdownEditDTO markdown, IConvertService convertService, IAppSettings settings) =>
       {
         if (markdown is null || string.IsNullOrEmpty(markdown.Path))
@@ -70,6 +74,7 @@ namespace MarkdownNavigator.Web.Services
         return new ResultTextDTO();
       });
 
+      // Saves the image next to the corresponding Markdown file.
       app.MapPost($"api/image", async (HttpRequest request, IAppSettings settings) =>
       {
         if (!request.HasFormContentType || !request.Form.Files.Any() || !request.Form.ContainsKey("markdownPath"))
@@ -79,7 +84,6 @@ namespace MarkdownNavigator.Web.Services
 
         var file = request.Form.Files["image"];
         var path = request.Form["markdownPath"].FirstOrDefault();
-
         if (file == null || file.Length == 0)
         {
           return new ResultTextDTO("Empty file.", true);
@@ -92,14 +96,12 @@ namespace MarkdownNavigator.Web.Services
 
         var fullMarkdownPath = Path.Combine(settings.SourceFolder, path);
         var markdownFile = new FileInfo(fullMarkdownPath);
-
         if (!markdownFile.Exists)
         {
           return new ResultTextDTO("Markdown file does not exist.", true);
         }
 
         var fullImagePath = Path.Combine(markdownFile.DirectoryName, file.FileName);
-
         using (var stream = new FileStream(fullImagePath, FileMode.Create))
         {
           await file.CopyToAsync(stream);

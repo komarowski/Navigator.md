@@ -18,8 +18,7 @@ const Header: React.FunctionComponent<IProps> = ({
       ? EditorMode.DEFAULT 
       : editorMode;
 
-    const newEditorState = { ...editorState, editorMode: newMode };
-    setEditorState(newEditorState);
+    setEditorState({ editorMode: newMode });
   };
 
   const handlePreviewClick = (): void => {

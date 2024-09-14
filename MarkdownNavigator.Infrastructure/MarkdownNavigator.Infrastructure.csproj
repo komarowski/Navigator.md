@@ -31,6 +31,7 @@
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Regular.woff2" />
     <None Remove="Resources\assets\js\main.js" />
     <None Remove="Resources\assets\js\prism.js" />
+    <None Remove="Resources\assets\js\utils.js" />
     <None Remove="Resources\assets\logo.ico" />
     <None Remove="Resources\assets\logo.svg" />
     <None Remove="Resources\content\help.md" />
@@ -47,9 +48,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\assets\logo.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Resources\assets\css\prism.css" />
     <EmbeddedResource Include="Resources\assets\css\style.css" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.eot" />
@@ -74,6 +72,7 @@
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.woff2" />
     <EmbeddedResource Include="Resources\assets\js\main.js" />
     <EmbeddedResource Include="Resources\assets\js\prism.js" />
+    <EmbeddedResource Include="Resources\assets\js\utils.js" />
     <EmbeddedResource Include="Resources\content\help.md" />
     <EmbeddedResource Include="Resources\content\index.md" />
     <EmbeddedResource Include="Resources\templates\default.html" />

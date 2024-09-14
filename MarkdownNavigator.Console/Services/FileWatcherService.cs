@@ -30,8 +30,8 @@ namespace MarkdownNavigator.Console.Services
       {
         this.fileSystemWatcher.Dispose();
         this.fileSystemWatcher = null;
+        ConsoleService.WriteLogBeforeReadLine($"FileWatcher stopped.", LogType.Info, string.Empty);
       }
-      ConsoleService.WriteLogBeforeReadLine($"FileWatcher stopped.", LogType.Info, string.Empty);
     }
 
     private void OnError(object sender, ErrorEventArgs e)

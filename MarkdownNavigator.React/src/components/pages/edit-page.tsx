@@ -15,7 +15,6 @@ import HtmlView from "../htmlview/html-view";
 import Header from "../header/header";
 import Textarea from "../textarea/textarea";
 
-
 const useGetHtmlResult = (
   editorMode: string,
   previewText: string
@@ -57,9 +56,15 @@ const EditPage: React.FunctionComponent = () => {
   const markdownResult = useGetMarkdownResult();
   const markdownResultText = markdownResult.text || "";
 
-  const [previewText, setPreviewText] = useTextDebounce(markdownResultText, 1000);
-  
-  const previewHtmlResult = useGetHtmlResult(editorState.editorMode,previewText);
+  const [previewText, setPreviewText] = useTextDebounce(
+    markdownResultText,
+    1000
+  );
+
+  const previewHtmlResult = useGetHtmlResult(
+    editorState.editorMode,
+    previewText
+  );
   const helpHtmlResult = useGetHelpResult();
 
   useEffect(() => {
