@@ -72,7 +72,15 @@ select * from table
 
 - `!<tabs>`
 - `<tab> TabHeader1`
-- `</tabs>` 
+- `</tabs>`
+
+### Textarea with JS
+
+````markdown
+<textarea class="textarea-js">
+console. log("Hello World");
+</textarea>
+````
 
 ### Image silder
 

@@ -479,6 +479,50 @@ body {
     }
 
 
+/* Textarea for running js Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.textarea-js {
+  width: 100%;
+  margin: 5px 0px;
+  font-family: Courier, monospace;
+  font-weight: bolder;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #f8f8f8;
+  color: #5d3f6a;
+  padding: 5px 5px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  resize: vertical;
+  overflow: auto;
+  white-space: pre;
+}
+
+.button-run-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -30px;
+  margin-right: 8px;
+}
+
+.button-run {
+  z-index: 2;
+  margin-top: 16px;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  border: none;
+  color: transparent;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='28px' viewBox='0 -960 960 960' width='28px' fill='%231b657e'><path d='M320-200v-560l440 280-440 280Z'/></svg>") center no-repeat;
+}
+
+.button-run:hover {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='30px' viewBox='0 -960 960 960' width='30px' fill='%23238ca7'><path d='M320-200v-560l440 280-440 280Z'/></svg>") center no-repeat;
+}
+
+
 /* Slider Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 

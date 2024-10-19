@@ -180,6 +180,7 @@ const main = (nodeList) => {
   setUpContentTable();
   setUpSidebar();
   applyCodeCopy();
+  initializeJsTextareas();
 }
 
 // "nodeList" is taken from "tree.js"
