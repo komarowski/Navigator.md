@@ -7,8 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\assets\css\prism.css" />
-    <None Remove="Resources\assets\css\style.css" />
+    <Compile Remove="Resources\assets\css\**" />
+    <Compile Remove="Resources\assets\js\**" />
+    <EmbeddedResource Remove="Resources\assets\css\**" />
+    <EmbeddedResource Remove="Resources\assets\js\**" />
+    <None Remove="Resources\assets\css\**" />
+    <None Remove="Resources\assets\js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\assets\core\core.css" />
+    <None Remove="Resources\assets\core\core.js" />
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.eot" />
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.ttf" />
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Black.woff" />
@@ -29,27 +38,33 @@
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Regular.ttf" />
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Regular.woff" />
     <None Remove="Resources\assets\fonts\Roboto\Roboto-Regular.woff2" />
-    <None Remove="Resources\assets\js\main.js" />
-    <None Remove="Resources\assets\js\prism.js" />
-    <None Remove="Resources\assets\js\utils.js" />
     <None Remove="Resources\assets\logo.ico" />
     <None Remove="Resources\assets\logo.svg" />
+    <None Remove="Resources\assets\plugins\code\plugin.css" />
+    <None Remove="Resources\assets\plugins\code\plugin.js" />
+    <None Remove="Resources\assets\plugins\jstextarea\plugin.js" />
+    <None Remove="Resources\assets\plugins\prism\plugin.css" />
+    <None Remove="Resources\assets\plugins\prism\plugin.js" />
+    <None Remove="Resources\assets\plugins\slider\plugin.css" />
+    <None Remove="Resources\assets\plugins\slider\plugin.js" />
     <None Remove="Resources\content\help.md" />
     <None Remove="Resources\content\index.md" />
     <None Remove="Resources\templates\default.html" />
     <None Remove="Resources\test\notes\note.md" />
+    <None Remove="Resources\test\notes\todo.md" />
     <None Remove="Resources\test\programming\csharp\code.md" />
     <None Remove="Resources\test\programming\csharp\theory.md" />
     <None Remove="Resources\test\programming\javascript\code.md" />
     <None Remove="Resources\test\programming\javascript\theory.md" />
     <None Remove="Resources\test\programming\sql\basics.md" />
     <None Remove="Resources\test\programming\sql\sql.svg" />
+    <None Remove="Resources\test\_tasks\Task1\task.md" />
+    <None Remove="Resources\test\_tasks\Task2\task.md" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\assets\core\core.js" />
     <EmbeddedResource Include="Resources\assets\logo.ico" />
-    <EmbeddedResource Include="Resources\assets\css\prism.css" />
-    <EmbeddedResource Include="Resources\assets\css\style.css" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.eot" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.ttf" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Black.woff" />
@@ -70,23 +85,33 @@
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.ttf" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.woff" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto\Roboto-Regular.woff2" />
-    <EmbeddedResource Include="Resources\assets\js\main.js" />
-    <EmbeddedResource Include="Resources\assets\js\prism.js" />
-    <EmbeddedResource Include="Resources\assets\js\utils.js" />
+    <EmbeddedResource Include="Resources\assets\plugins\code\plugin.js" />
+    <EmbeddedResource Include="Resources\assets\plugins\code\plugin.css" />
+    <EmbeddedResource Include="Resources\assets\plugins\jstextarea\plugin.js" />
+    <EmbeddedResource Include="Resources\assets\plugins\prism\plugin.css" />
+    <EmbeddedResource Include="Resources\assets\plugins\prism\plugin.js" />
+    <EmbeddedResource Include="Resources\assets\plugins\slider\plugin.css" />
+    <EmbeddedResource Include="Resources\assets\plugins\slider\plugin.js" />
     <EmbeddedResource Include="Resources\content\help.md" />
     <EmbeddedResource Include="Resources\content\index.md" />
     <EmbeddedResource Include="Resources\templates\default.html" />
-    <EmbeddedResource Include="Resources\test\notes\note.md" />
+    <EmbeddedResource Include="Resources\test\notes\todo.md" />
     <EmbeddedResource Include="Resources\test\programming\csharp\code.md" />
     <EmbeddedResource Include="Resources\test\programming\csharp\theory.md" />
     <EmbeddedResource Include="Resources\test\programming\javascript\code.md" />
     <EmbeddedResource Include="Resources\test\programming\javascript\theory.md" />
     <EmbeddedResource Include="Resources\test\programming\sql\basics.md" />
     <EmbeddedResource Include="Resources\test\programming\sql\sql.svg" />
+    <EmbeddedResource Include="Resources\test\_tasks\Task1\task.md" />
+    <EmbeddedResource Include="Resources\test\_tasks\Task2\task.md" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.49.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\assets\core\core.css" />
   </ItemGroup>
 
 </Project>

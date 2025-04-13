@@ -4,7 +4,7 @@
   {
     public string SourceFolder { get; set; } = string.Empty;
 
-    public string Server { get; set; } = string.Empty;
+    public List<string> PluginList { get; set; } = [];
 
     public bool DisableCopyAssets { get; set; }
   }

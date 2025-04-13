@@ -15,6 +15,14 @@ namespace MarkdownNavigator.Domain.Services
     private string? helpHtmlContent;
     private string? template;
 
+    private static readonly Dictionary<string, (string? CssPath, string? JsPath)> PluginAssets = new()
+    {
+      ["prism"] = ("assets/plugins/prism/plugin.css", "assets/plugins/prism/plugin.js"),
+      ["slider"] = ("assets/plugins/slider/plugin.css", "assets/plugins/slider/plugin.js"),
+      ["code"] = ("assets/plugins/code/plugin.css", "assets/plugins/code/plugin.js"),
+      ["jstextarea"] = (null, "assets/plugins/jstextarea/plugin.js"),
+    };
+
     /// <summary>
     /// Content for index.html file.
     /// </summary>
@@ -56,22 +64,27 @@ namespace MarkdownNavigator.Domain.Services
     private string IndexHtmlPath => Path.Combine(settings.SourceFolder, "index.html");
     private string HelpHtmlPath => Path.Combine(settings.SourceFolder, "help.html");
 
-    public int ConvertAllHtml(bool forceRefreshAll = false)
+    public int ConvertAllHtml(bool forceRefresh = false)
     {
       var tree = new TreeStructure();
-      tree = treeService.WalkDirectoryTree(new DirectoryInfo(settings.SourceFolder), tree, forceRefreshAll);
+      tree = treeService.WalkDirectoryTree(
+        new DirectoryInfo(settings.SourceFolder), 
+        tree, 
+        forceRefresh: forceRefresh, 
+        firstCall: true);
+
       foreach (var markdownFile in tree.MdFilesToConvert)
       {
         ConvertHtml(markdownFile);
       }
 
-      if (!File.Exists(IndexMdPath) && (!File.Exists(IndexHtmlPath) || forceRefreshAll))
+      if (!File.Exists(IndexMdPath) && (!File.Exists(IndexHtmlPath) || forceRefresh))
       {
         var html = GetHtmlPageFromTemplate(IndexHtmlContent, string.Empty, string.Empty);
         File.WriteAllText(IndexHtmlPath, html);
       }
 
-      if (!File.Exists(HelpHtmlPath) || forceRefreshAll)
+      if (!File.Exists(HelpHtmlPath) || forceRefresh)
       {
         var html = GetHtmlPageFromTemplate(HelpHtmlContent, string.Empty, string.Empty);
         File.WriteAllText(HelpHtmlPath, html);
@@ -124,15 +137,30 @@ namespace MarkdownNavigator.Domain.Services
     /// <returns>Final html page.</returns>
     private string GetHtmlPageFromTemplate(string htmlContent, string nodeId, string nodeRelativePath)
     {
+      var cssLinksBuilder = new StringBuilder();
+      var jsLinksBuilder = new StringBuilder();
+      foreach (var plugin in settings.PluginList)
+      {
+        if (PluginAssets.TryGetValue(plugin, out var assets))
+        {
+          if (!string.IsNullOrEmpty(assets.CssPath))
+          {
+            cssLinksBuilder.AppendLine($"<link rel=\"stylesheet\" href=\"{nodeRelativePath}{assets.CssPath}\" />");
+          }
+
+          if (!string.IsNullOrEmpty(assets.JsPath))
+          {
+            jsLinksBuilder.AppendLine($"<script src=\"{nodeRelativePath}{assets.JsPath}\"></script>");
+          }
+        }
+      }
+
       var htmlPage = new string(Template);
       htmlPage = htmlPage.Replace(HtmlReplacementCodes.CurrentNodeId, nodeId);
       htmlPage = htmlPage.Replace(HtmlReplacementCodes.MainBody, htmlContent);
       htmlPage = htmlPage.Replace(HtmlReplacementCodes.RelativePath, nodeRelativePath);
-
-      var editLink = string.IsNullOrEmpty(settings.Server)
-        ? "/"
-        : $"{settings.Server}/{FileExtensionService.HtmlToMarkdown(nodeId)}";
-      htmlPage = htmlPage.Replace(HtmlReplacementCodes.EditLink, editLink);
+      htmlPage = htmlPage.Replace(HtmlReplacementCodes.PluginsCssLinks, cssLinksBuilder.ToString());
+      htmlPage = htmlPage.Replace(HtmlReplacementCodes.PluginsJsLinks, jsLinksBuilder.ToString());
 
       return htmlPage;
     }

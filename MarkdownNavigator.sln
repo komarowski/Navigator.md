@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownNavigator.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownNavigator.Infrastructure", "MarkdownNavigator.Infrastructure\MarkdownNavigator.Infrastructure.csproj", "{75D6F8B3-760D-494E-AD9D-37617ABAA972}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownNavigator.Web", "MarkdownNavigator.Web\MarkdownNavigator.Web.csproj", "{C45BC42D-ABFB-4C7F-9690-2B41DDE178EB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownNavigator.Console", "MarkdownNavigator.Console\MarkdownNavigator.Console.csproj", "{0E686172-C6CC-457D-B39A-529A1C3F1612}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{75D6F8B3-760D-494E-AD9D-37617ABAA972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75D6F8B3-760D-494E-AD9D-37617ABAA972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75D6F8B3-760D-494E-AD9D-37617ABAA972}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C45BC42D-ABFB-4C7F-9690-2B41DDE178EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C45BC42D-ABFB-4C7F-9690-2B41DDE178EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C45BC42D-ABFB-4C7F-9690-2B41DDE178EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C45BC42D-ABFB-4C7F-9690-2B41DDE178EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0E686172-C6CC-457D-B39A-529A1C3F1612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E686172-C6CC-457D-B39A-529A1C3F1612}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E686172-C6CC-457D-B39A-529A1C3F1612}.Release|Any CPU.ActiveCfg = Release|Any CPU

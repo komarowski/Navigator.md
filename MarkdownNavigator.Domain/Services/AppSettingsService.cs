@@ -16,7 +16,7 @@ namespace MarkdownNavigator.Domain.Services
 
       appSettings.SourceFolder = settings.SourceFolder;
       appSettings.DisableCopyAssets = settings.DisableCopyAssets;
-      appSettings.Server = settings.Server;
+      appSettings.PluginList = settings.PluginList;
 
       return true;
     }

@@ -1,0 +1,77 @@
+﻿/* Slider Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.slider {
+  margin: 10px 0;
+  background: var(--background);
+  width: 100%;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.slide {
+  width: 100%;
+  height: 350px;
+  position: absolute;
+  transition: all 0.5s;
+}
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .slide span {
+    padding: 0 4px;
+    background: var(--border-light);
+    color: var(--white);
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 60%;
+    position: absolute;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+.button-slider {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(--border-light);
+  color: var(--white);
+  font-size: 18px;
+}
+
+  .button-slider:hover {
+    background-color: var(--border);
+  }
+
+.button-slider--prev {
+  top: 45%;
+  left: 2%;
+}
+
+.button-slider--next {
+  top: 45%;
+  right: 2%;
+}
+
+.button-slider--prev {
+  top: 45%;
+  left: 2%;
+}
+
+.button-slider--next {
+  top: 45%;
+  right: 2%;
+}
