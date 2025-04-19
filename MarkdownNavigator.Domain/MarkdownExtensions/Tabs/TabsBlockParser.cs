@@ -61,13 +61,13 @@ namespace MarkdownNavigator.Domain.MarkdownExtensions
         return BlockState.BreakDiscard;
       }
 
-      var contentWithIndent = new string(' ', processor.Indent) + content;
-      var lastTab = currentTabsBlock.Tabs.Last();
-      if (lastTab is not null)
+      if (currentTabsBlock.Tabs.Count > 0)
       {
-        lastTab.ContentLines.Add(contentWithIndent);
+        var contentWithIndent = new string(' ', processor.Indent) + content;
+        var lastTab = currentTabsBlock.Tabs.Last();
+        lastTab?.ContentLines.Add(contentWithIndent);
       }
-      
+
       return BlockState.Continue;
     }
   }

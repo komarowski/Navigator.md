@@ -72,70 +72,31 @@ select * from table
 
 - `!<tabs>`
 - `<tab> TabHeader1`
-- `</tabs>` 
+- `</tabs>`
+
+### Textarea with JS
+
+````markdown
+<textarea class="textarea-js">
+console. log("Hello World");
+</textarea>
+````
 
 ### Image silder
-
-<details>
-<summary>Image slider html</summary>
-<sm>
 
 ```html
 <div class="slider">
 <div class="slide">
 	<img src="02-sync-request-asp.net-core.png" title="">
-	<a class="source" href="https://code-maze.com/asynchronous-programming-with-async-and-await-in-asp-net-core/">Image source</a>
+	<span>Image source</span>
 </div>
 <div class="slide">
 	<img src="03-async-request-asp.net-core.png" alt="" title="">
-	<a class="source" href="https://code-maze.com/asynchronous-programming-with-async-and-await-in-asp-net-core/">Image source</a>
+	<span><a href="https://code-maze.com/asynchronous-programming-with-async-and-await-in-asp-net-core/">Image source</a></span>
 </div>
 <p><button class="button-slider button-slider--prev"> &lt; </button>
 <button class="button-slider button-slider--next"> &gt; </button></p>
 </div>
 ```
-</sm>
-</details>
-
-<details>
-<summary>Image slider js</summary>
-<sm>
-
-```html
-<script>
-const setSlides = (slides, currentSlide) => {
-  slides.forEach((slide, indx) => {
-    slide.style.transform = `translateX(${(indx - currentSlide) * 100}%)`;
-  });
-}
-
-const setSlider = () => {
-  document.querySelectorAll(".slider").forEach((slider) => {
-    const slides = slider.querySelectorAll(".slide");
-    const nextSlide = slider.querySelector(".button-slider--next");
-    const prevSlide = slider.querySelector(".button-slider--prev");
-    const maxSlideIndex = slides.length - 1;
-    let currentSlideIndex = 0;
-    if (nextSlide) {
-      nextSlide.onclick = () => {
-        currentSlideIndex = (currentSlideIndex === maxSlideIndex) ? 0 : currentSlideIndex + 1;
-        setSlides(slides, currentSlideIndex);
-      };
-    }
-    if (prevSlide) {
-      prevSlide.onclick = () => {
-        currentSlideIndex = (currentSlideIndex === 0) ? maxSlideIndex : currentSlideIndex - 1;
-        setSlides(slides, currentSlideIndex);
-      };
-    }
-    setSlides(slides, 0);
-  });
-}
-
-setSlider();
-</script>
-```
-</sm>
-</details>
 
 </tabs>

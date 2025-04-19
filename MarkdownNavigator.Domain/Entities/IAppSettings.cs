@@ -11,9 +11,9 @@
     public string SourceFolder { get; set; }
 
     /// <summary>
-    /// MarkdownNavigator.Web application url.
+    /// List of plugins to enable.
     /// </summary>
-    public string Server { get; set; }
+    public List<string> PluginList { get; set; }
 
     /// <summary>
     /// If true, do not copy asset files.

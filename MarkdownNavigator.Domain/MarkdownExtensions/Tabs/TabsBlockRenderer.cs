@@ -13,7 +13,7 @@ namespace MarkdownNavigator.Domain.MarkdownExtensions
 
     protected override void Write(HtmlRenderer renderer, TabsBlock obj)
     {
-      renderer.Write("<div class=\"tabs\">").WriteLine();
+      renderer.Write("<div class=\"tab-container\">").WriteLine();
 
       for (int i = 0; i < obj.Tabs.Count; i++)
       {
@@ -21,9 +21,9 @@ namespace MarkdownNavigator.Domain.MarkdownExtensions
         var checkedAttribute = i == 0 ? " checked=\"checked\"" : string.Empty;
         var tabId = $"{obj.Name}-{i + 1}";
 
-        renderer.Write($"<input class=\"input\" name=\"{obj.Name}\" type=\"radio\" id=\"{tabId}\"{checkedAttribute}/>").WriteLine();
-        renderer.Write($"<label class=\"label\" for=\"{tabId}\">{tab.Title}</label>").WriteLine();
-        renderer.Write("<div class=\"panel\">").WriteLine();
+        renderer.Write($"<input class=\"tab-input\" name=\"{obj.Name}\" type=\"radio\" id=\"{tabId}\"{checkedAttribute}/>").WriteLine();
+        renderer.Write($"<label class=\"tab-label\" for=\"{tabId}\">{tab.Title}</label>").WriteLine();
+        renderer.Write("<div class=\"tab-panel\">").WriteLine();
 
         var nestedMarkdown = string.Join("\n", tab.ContentLines);
         var nestedHtml = Markdown.ToHtml(nestedMarkdown, _pipeline);

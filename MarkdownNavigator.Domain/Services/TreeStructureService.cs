@@ -10,9 +10,14 @@ namespace MarkdownNavigator.Domain.Services
 
     private readonly string[] excludeFolders = [FolderReservedNames.AssetsFolder];
 
-    private readonly string[] excludeFromTreeViewFiles = ["index.md", "help.md"];
+    private readonly string[] excludeFromTreeFiles = ["index.md", "help.md"];
 
-    public TreeStructure WalkDirectoryTree(DirectoryInfo root, TreeStructure tree, bool refreshAll)
+    public TreeStructure WalkDirectoryTree(
+      DirectoryInfo root, 
+      TreeStructure tree, 
+      bool forceRefresh = false, 
+      bool excludedFromTree = false, 
+      bool firstCall = false)
     {
       FileInfo[]? files = null;
       try
@@ -32,25 +37,33 @@ namespace MarkdownNavigator.Domain.Services
       {
         foreach (FileInfo file in files)
         {
-          ProcessFile(file, tree, refreshAll);
+          var excludedFromTreeFile = firstCall && excludeFromTreeFiles.Contains(file.Name) 
+            || excludedFromTree;
+
+          ProcessFile(file, tree, forceRefresh, excludedFromTreeFile);
         }
 
         DirectoryInfo[] subDirs = root.GetDirectories();
         foreach (DirectoryInfo subDir in subDirs)
         {
-          if (excludeFolders.Contains(subDir.Name))
+          if (firstCall && excludeFolders.Contains(subDir.Name))
           {
             continue;
           }
-          
+
+          if (!excludedFromTree)
+          {
+            excludedFromTree = IsExcludedFromTreeFolder(subDir.Name);
+          }
+
           var parentNode = tree.CurrentNode;
-          if (!IsIgnoreNode(subDir.Name))
+          if (!excludedFromTree)
           {
             var nodeId = GetNodeId(subDir.FullName);
             tree.CurrentNode = tree.AddFolderNode(nodeId, subDir.Name);
           }
 
-          tree = WalkDirectoryTree(subDir, tree, refreshAll);
+          tree = WalkDirectoryTree(subDir, tree, forceRefresh, excludedFromTree);
           tree.CurrentNode = parentNode;
         }
       }
@@ -78,29 +91,31 @@ namespace MarkdownNavigator.Domain.Services
     /// </summary>
     /// <param name="file">File.</param>
     /// <param name="tree">Folder structure.</param>
-    /// <param name="forceRefreshAll">Update all files anyway.</param>
-    private void ProcessFile(FileInfo file, TreeStructure tree, bool forceRefreshAll)
+    /// <param name="forceRefresh">Update all files anyway.</param>
+    /// <param name="excludedFromTree">Exclude file from the tree structure.</param>
+    private void ProcessFile(FileInfo file, TreeStructure tree, bool forceRefresh, bool excludedFromTree)
     {
-      if (file.Extension == FileExtensionService.ExtensionMarkdown)
+      if (file.Extension != FileExtensionService.ExtensionMarkdown)
       {
-        var htmlFile = new FileInfo(FileExtensionService.MarkdownToHtml(file.FullName));
-        if (!htmlFile.Exists
-          || file.LastWriteTimeUtc > htmlFile.LastWriteTimeUtc
-          || forceRefreshAll)
-        {
-          tree.AddMarkdownToUpdate(file.FullName);
-        }
-
-        if (excludeFromTreeViewFiles.Contains(file.Name) 
-          || IsIgnoreNode(file.Directory!.Name))
-        {
-          return;
-        }
-
-        var nodeId = GetNodeId(file.FullName);
-        var title = GetFileTitle(file);
-        tree.AddFileNode(nodeId, title);
+        return;
       }
+
+      var htmlFile = new FileInfo(FileExtensionService.MarkdownToHtml(file.FullName));
+      if (!htmlFile.Exists
+        || file.LastWriteTimeUtc > htmlFile.LastWriteTimeUtc
+        || forceRefresh)
+      {
+        tree.AddMarkdownToUpdate(file.FullName);
+      }
+
+      if (excludedFromTree)
+      {
+        return;
+      }
+
+      var nodeId = GetNodeId(file.FullName);
+      var title = GetFileTitle(file);
+      tree.AddFileNode(nodeId, title);
     }
 
     /// <summary>
@@ -118,7 +133,7 @@ namespace MarkdownNavigator.Domain.Services
     /// </summary>
     /// <param name="folderName">Node folder name.</param>
     /// <returns>True if the node should be ignored.</returns>
-    private static bool IsIgnoreNode(string folderName)
+    private static bool IsExcludedFromTreeFolder(string folderName)
     {
       return folderName.StartsWith('_');
     }

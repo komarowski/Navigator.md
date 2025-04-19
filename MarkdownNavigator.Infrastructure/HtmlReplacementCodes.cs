@@ -21,8 +21,13 @@
     public const string MainBody = "{@MainBody}";
 
     /// <summary>
-    /// 
+    /// CSS plugin links.
     /// </summary>
-    public const string EditLink = "{@EditLink}";
+    public const string PluginsCssLinks = "{@PluginsCssLinks}";
+
+    /// <summary>
+    /// JS plugin links.
+    /// </summary>
+    public const string PluginsJsLinks = "{@PluginsJsLinks}";
   }
 }
