@@ -69,9 +69,9 @@ namespace MarkdownNavigator.Domain.Services
       var tree = new TreeStructure();
       tree = treeService.WalkDirectoryTree(
         new DirectoryInfo(settings.SourceFolder), 
-        tree, 
+        tree,
         forceRefresh: forceRefresh, 
-        firstCall: true);
+        isRoot: true);
 
       foreach (var markdownFile in tree.MdFilesToConvert)
       {

@@ -42,7 +42,7 @@ namespace MarkdownNavigator.Tests.Tests
         new DirectoryInfo(fixture.TestDirectory), 
         tree,
         forceRefresh: true,
-        firstCall: true);
+        isRoot: true);
 
       // Assert
       Assert.Equal(rootFilesCount, tree.MdFilesToConvert.Count);
@@ -107,6 +107,7 @@ namespace MarkdownNavigator.Tests.Tests
     private static void VerifyConvertAllHtmlResults(DirectoryInfo testDirectory, int expectedCount, int actualCount)
     {
       var markdownFileNames = testDirectory.GetFiles("*.md", SearchOption.AllDirectories)
+        .Where(x => x.Name != "README.md")
         .Select(x => x.Name.Split('.').First());
       var htmlFileNames = testDirectory.GetFiles("*.html", SearchOption.AllDirectories)
         .Select(x => x.Name.Split('.').First());
@@ -120,6 +121,7 @@ namespace MarkdownNavigator.Tests.Tests
 
       Assert.Contains("index", htmlFileNames);
       Assert.Contains("help", htmlFileNames);
+      Assert.DoesNotContain("README", htmlFileNames);
     }
 
     private static void VerifyAssetsFiles(DirectoryInfo testDirectory)

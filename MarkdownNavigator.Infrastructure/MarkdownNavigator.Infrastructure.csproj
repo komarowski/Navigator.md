@@ -50,6 +50,7 @@
     <None Remove="Resources\content\help.md" />
     <None Remove="Resources\content\index.md" />
     <None Remove="Resources\templates\default.html" />
+    <None Remove="Resources\test\ignore.json" />
     <None Remove="Resources\test\notes\note.md" />
     <None Remove="Resources\test\notes\todo.md" />
     <None Remove="Resources\test\programming\csharp\code.md" />
@@ -58,6 +59,7 @@
     <None Remove="Resources\test\programming\javascript\theory.md" />
     <None Remove="Resources\test\programming\sql\basics.md" />
     <None Remove="Resources\test\programming\sql\sql.svg" />
+    <None Remove="Resources\test\README.md" />
     <None Remove="Resources\test\_tasks\Task1\task.md" />
     <None Remove="Resources\test\_tasks\Task2\task.md" />
   </ItemGroup>
@@ -95,6 +97,7 @@
     <EmbeddedResource Include="Resources\content\help.md" />
     <EmbeddedResource Include="Resources\content\index.md" />
     <EmbeddedResource Include="Resources\templates\default.html" />
+    <EmbeddedResource Include="Resources\test\ignore.json" />
     <EmbeddedResource Include="Resources\test\notes\todo.md" />
     <EmbeddedResource Include="Resources\test\programming\csharp\code.md" />
     <EmbeddedResource Include="Resources\test\programming\csharp\theory.md" />
@@ -102,6 +105,7 @@
     <EmbeddedResource Include="Resources\test\programming\javascript\theory.md" />
     <EmbeddedResource Include="Resources\test\programming\sql\basics.md" />
     <EmbeddedResource Include="Resources\test\programming\sql\sql.svg" />
+    <EmbeddedResource Include="Resources\test\README.md" />
     <EmbeddedResource Include="Resources\test\_tasks\Task1\task.md" />
     <EmbeddedResource Include="Resources\test\_tasks\Task2\task.md" />
   </ItemGroup>
