@@ -461,6 +461,7 @@ body {
 .tab-input {
   position: absolute;
   opacity: 0;
+  display: none;
 }
 
   .tab-input:focus + .tab-label {
