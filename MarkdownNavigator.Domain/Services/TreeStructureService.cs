@@ -1,6 +1,6 @@
 ﻿using MarkdownNavigator.Domain.Entities;
-using MarkdownNavigator.Infrastructure;
 using MarkdownNavigator.Infrastructure.Services;
+using System.Text.Json;
 
 namespace MarkdownNavigator.Domain.Services
 {
@@ -8,27 +8,23 @@ namespace MarkdownNavigator.Domain.Services
   {
     private readonly IAppSettings settings = settings;
 
-    private readonly string[] excludeFolders = [FolderReservedNames.AssetsFolder];
-
     private readonly string[] excludeFromTreeFiles = ["index.md", "help.md"];
 
     public TreeStructure WalkDirectoryTree(
       DirectoryInfo root, 
-      TreeStructure tree, 
+      TreeStructure tree,
+      IgnoreRules? ignoreRules = null,
       bool forceRefresh = false, 
       bool excludedFromTree = false, 
-      bool firstCall = false)
+      bool isRoot = false)
     {
+      ignoreRules ??= GetIgnoreRules();
       FileInfo[]? files = null;
       try
       {
-        files = root.GetFiles("*.*");
+        files = GetMarkdownFiles(root, ignoreRules, isRoot);
       }
-      catch (UnauthorizedAccessException ex)
-      {
-        ConsoleService.WriteLog(ex.Message, LogType.Error);
-      }
-      catch (DirectoryNotFoundException ex)
+      catch (Exception ex) when (ex is UnauthorizedAccessException or DirectoryNotFoundException)
       {
         ConsoleService.WriteLog(ex.Message, LogType.Error);
       }
@@ -37,20 +33,15 @@ namespace MarkdownNavigator.Domain.Services
       {
         foreach (FileInfo file in files)
         {
-          var excludedFromTreeFile = firstCall && excludeFromTreeFiles.Contains(file.Name) 
+          var excludedFromTreeFile = isRoot && excludeFromTreeFiles.Contains(file.Name) 
             || excludedFromTree;
 
           ProcessFile(file, tree, forceRefresh, excludedFromTreeFile);
         }
 
-        DirectoryInfo[] subDirs = root.GetDirectories();
+        DirectoryInfo[] subDirs = GetMarkdownDirectories(root, ignoreRules, isRoot);
         foreach (DirectoryInfo subDir in subDirs)
         {
-          if (firstCall && excludeFolders.Contains(subDir.Name))
-          {
-            continue;
-          }
-
           if (!excludedFromTree)
           {
             excludedFromTree = IsExcludedFromTreeFolder(subDir.Name);
@@ -63,7 +54,7 @@ namespace MarkdownNavigator.Domain.Services
             tree.CurrentNode = tree.AddFolderNode(nodeId, subDir.Name);
           }
 
-          tree = WalkDirectoryTree(subDir, tree, forceRefresh, excludedFromTree);
+          tree = WalkDirectoryTree(subDir, tree, ignoreRules, forceRefresh, excludedFromTree);
           tree.CurrentNode = parentNode;
         }
       }
@@ -95,11 +86,6 @@ namespace MarkdownNavigator.Domain.Services
     /// <param name="excludedFromTree">Exclude file from the tree structure.</param>
     private void ProcessFile(FileInfo file, TreeStructure tree, bool forceRefresh, bool excludedFromTree)
     {
-      if (file.Extension != FileExtensionService.ExtensionMarkdown)
-      {
-        return;
-      }
-
       var htmlFile = new FileInfo(FileExtensionService.MarkdownToHtml(file.FullName));
       if (!htmlFile.Exists
         || file.LastWriteTimeUtc > htmlFile.LastWriteTimeUtc
@@ -129,6 +115,30 @@ namespace MarkdownNavigator.Domain.Services
     }
 
     /// <summary>
+    /// Loads ignore rules from the <c>ignore.json</c> file in the source folder.
+    /// If the file does not exist or contains invalid JSON, default ignore rules are returned.
+    /// </summary>
+    /// <returns>An <see cref="IgnoreRules"/> instance with configured or default values.</returns>
+    private IgnoreRules GetIgnoreRules()
+    {
+      var filePath = Path.Combine(settings.SourceFolder, "ignore.json");
+      if (!File.Exists(filePath))
+      {
+        return new IgnoreRules();
+      }
+
+      try
+      {
+        var json = File.ReadAllText(filePath);
+        return JsonSerializer.Deserialize<IgnoreRules>(json) ?? new IgnoreRules();
+      }
+      catch (JsonException)
+      {
+        return new IgnoreRules();
+      }
+    }
+
+    /// <summary>
     /// Checks that the node is not displayed in the tree view.
     /// </summary>
     /// <param name="folderName">Node folder name.</param>
@@ -136,6 +146,48 @@ namespace MarkdownNavigator.Domain.Services
     private static bool IsExcludedFromTreeFolder(string folderName)
     {
       return folderName.StartsWith('_');
+    }
+
+    /// <summary>
+    /// Retrieves all Markdown files (<c>*.md</c>) from the specified directory,
+    /// excluding any files based on the provided <see cref="IgnoreRules"/>.
+    /// </summary>
+    /// <param name="directory">The directory to search for Markdown files.</param>
+    /// <param name="ignoreRules">The ignore rules to apply when filtering files.</param>
+    /// <param name="isRoot">First call in the recursive tree walk.</param>
+    /// <returns>An array of <see cref="FileInfo"/>.</returns>
+    private static FileInfo[] GetMarkdownFiles(DirectoryInfo directory, IgnoreRules ignoreRules, bool isRoot)
+    {
+      if (isRoot)
+      {
+        return directory
+          .GetFiles("*.md")
+          .Where(file => !ignoreRules.ExcludeFiles.Contains(file.Name, StringComparer.OrdinalIgnoreCase))
+          .ToArray();
+      }
+
+      return directory.GetFiles("*.md");
+    }
+
+    /// <summary>
+    /// Retrieves all subdirectories from the specified directory,
+    /// excluding any folders based on the provided <see cref="IgnoreRules"/>.
+    /// </summary>
+    /// <param name="directory">The parent directory to search for subdirectories.</param>
+    /// <param name="ignoreRules">The ignore rules to apply when filtering files.</param>
+    /// <param name="isRoot">First call in the recursive tree walk.</param>
+    /// <returns>An array of <see cref="DirectoryInfo"/>.</returns>
+    private static DirectoryInfo[] GetMarkdownDirectories(DirectoryInfo directory, IgnoreRules ignoreRules, bool isRoot)
+    {
+      if (isRoot)
+      {
+        return directory
+          .GetDirectories()
+          .Where(dir => !ignoreRules.ExcludeFolders.Contains(dir.Name, StringComparer.OrdinalIgnoreCase))
+          .ToArray();
+      }
+
+      return directory.GetDirectories();
     }
 
     /// <summary>

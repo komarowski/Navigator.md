@@ -13,16 +13,18 @@ namespace MarkdownNavigator.Domain.Services
     /// </summary>
     /// <param name="root">Root directory.</param>
     /// <param name="tree">Storing information.</param>
+    /// <param name="ignoreRules">The ignore rules to apply when filtering files.</param>
     /// <param name="forceRefresh">Update all files anyway.</param>
     /// <param name="excludeFromTree">Exclude folders and files from the tree structure.</param>
-    /// <param name="firstCall">First call in the recursive tree walk.</param>
+    /// <param name="isRoot">First call in the recursive tree walk.</param>
     /// <returns>Information about the folder structure.</returns>
     public TreeStructure WalkDirectoryTree(
       DirectoryInfo root, 
-      TreeStructure tree, 
+      TreeStructure tree,
+      IgnoreRules? ignoreRules = null,
       bool forceRefresh = false, 
       bool excludeFromTree = false, 
-      bool firstCall = false);
+      bool isRoot = false);
 
     /// <summary>
     /// Get node id from markdown or folder full path.

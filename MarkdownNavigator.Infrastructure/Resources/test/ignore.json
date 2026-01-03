@@ -1,0 +1,8 @@
+{
+  "ExcludeFiles": [
+    "README.md"
+  ],
+  "ExcludeFolders": [
+    "assets"
+  ]
+}
