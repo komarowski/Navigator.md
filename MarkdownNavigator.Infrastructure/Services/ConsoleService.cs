@@ -18,18 +18,6 @@ namespace MarkdownNavigator.Infrastructure.Services
   public static class ConsoleService
   {
     /// <summary>
-    /// Write color text.
-    /// </summary>
-    /// <param name="text">Text.</param>
-    /// <param name="color">Text color.</param>
-    public static void WriteColor(string text, ConsoleColor color)
-    {
-      Console.ForegroundColor = color;
-      Console.Write(text);
-      Console.ForegroundColor = ConsoleColor.White;
-    }
-
-    /// <summary>
     /// Write greeting.
     /// </summary>
     public static void WriteGreeting()
