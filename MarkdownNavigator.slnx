@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MarkdownNavigator.Console/MarkdownNavigator.Console.csproj" />
+  <Project Path="MarkdownNavigator.Domain/MarkdownNavigator.Domain.csproj" />
+  <Project Path="MarkdownNavigator.Infrastructure/MarkdownNavigator.Infrastructure.csproj" />
+  <Project Path="MarkdownNavigator.Tests/MarkdownNavigator.Tests.csproj" />
+</Solution>
