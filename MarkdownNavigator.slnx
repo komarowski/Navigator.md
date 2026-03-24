@@ -1,6 +1,5 @@
 <Solution>
-  <Project Path="MarkdownNavigator.Console/MarkdownNavigator.Console.csproj" />
-  <Project Path="MarkdownNavigator.Domain/MarkdownNavigator.Domain.csproj" />
-  <Project Path="MarkdownNavigator.Infrastructure/MarkdownNavigator.Infrastructure.csproj" />
+  <Project Path="MarkdownNavigator.Console/MarkdownNavigator.Console.csproj" Id="bf76dbac-0bc5-41b6-a707-048d43a34212" />
+  <Project Path="MarkdownNavigator.Core/MarkdownNavigator.Core.csproj" Id="abdd33f9-a48f-4b92-9da7-952c4adb033e" />
   <Project Path="MarkdownNavigator.Tests/MarkdownNavigator.Tests.csproj" />
 </Solution>

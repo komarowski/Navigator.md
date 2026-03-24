@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\assets\core.css" />
+    <None Remove="Resources\assets\core.js" />
+    <None Remove="Resources\assets\fonts\Roboto-Bold.woff2" />
+    <None Remove="Resources\assets\fonts\Roboto-Regular.woff2" />
+    <None Remove="Resources\assets\logo.ico" />
+    <None Remove="Resources\assets\plugins\code\plugin.css" />
+    <None Remove="Resources\assets\plugins\code\plugin.js" />
+    <None Remove="Resources\assets\plugins\prism\plugin.css" />
+    <None Remove="Resources\assets\plugins\prism\plugin.js" />
+    <None Remove="Resources\assets\plugins\slider\plugin.css" />
+    <None Remove="Resources\assets\plugins\slider\plugin.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\assets\core.css" />
+    <EmbeddedResource Include="Resources\assets\core.js" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto-Bold.woff2" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto-Regular.woff2" />
+    <EmbeddedResource Include="Resources\assets\logo.ico" />
+    <EmbeddedResource Include="Resources\assets\plugins\code\plugin.css" />
+    <EmbeddedResource Include="Resources\assets\plugins\code\plugin.js" />
+    <EmbeddedResource Include="Resources\assets\plugins\prism\plugin.css" />
+    <EmbeddedResource Include="Resources\assets\plugins\prism\plugin.js" />
+    <EmbeddedResource Include="Resources\assets\plugins\slider\plugin.css" />
+    <EmbeddedResource Include="Resources\assets\plugins\slider\plugin.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Markdig" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <PackageReference Include="YamlDotNet" Version="16.3.0" />
+  </ItemGroup>
+
+</Project>

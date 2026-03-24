@@ -1,80 +1,137 @@
-﻿using MarkdownNavigator.Domain.Services;
-using MarkdownNavigator.Infrastructure.Services;
+using MarkdownNavigator.Core.Application;
+using Spectre.Console;
 
-namespace MarkdownNavigator.Console.Services
+namespace MarkdownNavigator.Console.Services;
+
+/// <summary>
+/// Implementation of console command service.
+/// Orchestrates the build process and handles file watching.
+/// </summary>
+public class ConsoleCommandService(
+    ISiteBuilder siteBuilder,
+    FileWatcherService fileWatcherService)
 {
-  /// <summary>
-  /// Service for processing console commands.
-  /// </summary>
-  /// <param name="fileWatcherService">Monitors changes to markdown files.</param>
-  /// <param name="convertService">Service for converting markdown files to html.</param>
-  public class ConsoleCommandService(IFileWatcherService fileWatcherService, IConvertService convertService)
-  {
-    private readonly IFileWatcherService fileWatcherService = fileWatcherService;
-    private readonly IConvertService convertService = convertService;
+    private static readonly CommandItem[] CommandItems =
+    [
+        new("rebuild", "b", "Rebuild all HTML files from scratch"),
+        new("exit", "e", "Exit program")
+    ];
 
-    public void HandleConsoleCommands(CancellationTokenSource? cancellationToken = null)
+    /// <summary>
+    /// Runs the console workflow:
+    /// initial refresh, start watcher, and process commands.
+    /// </summary>
+    public Task RunAsync()
     {
-      ConsoleService.WriteGreeting();
-      var updatedFilesNumber = convertService.ConvertAllHtml();
-      ConsoleService.WriteLog($"Updated or added {updatedFilesNumber} files.", LogType.Info);
-      while (true)
-      {
-        var input = ConsoleService.Prompt(">");
+        WriteCommandsTable();
 
-        if (EqualsAnyCommand(input, "r", "refresh"))
+        RunRefresh("Initial refresh...");
+        fileWatcherService.Start();
+
+        AnsiConsole.MarkupLine("[grey]Watching source folder for changes...[/]");
+        AnsiConsole.WriteLine();
+
+        while (true)
         {
-          updatedFilesNumber = convertService.ConvertAllHtml();
-          ConsoleService.WriteLog($"Updated or added {updatedFilesNumber} files.", LogType.Info);
-          continue;
-        }
+            var command = ReadCommand();
 
-        if (EqualsAnyCommand(input, "h", "hr", "hard refresh"))
-        {
-          updatedFilesNumber = convertService.ConvertAllHtml(true);
-          ConsoleService.WriteLog($"Updated or added {updatedFilesNumber} files.", LogType.Info);
-          continue;
-        }
+            switch (command)
+            {
+                case "rebuild":
+                case "b":
+                    RunRebuild("Manual rebuild...");
+                    break;
 
-        if (EqualsAnyCommand(input, "w", "watch"))
-        {
-          fileWatcherService.StartFileWatcher();
-          continue;
-        }
+                case "exit":
+                case "e":
+                    AnsiConsole.MarkupLine("[yellow]Closing Navigator.md...[/]");
+                    return Task.CompletedTask;
 
-        if (EqualsAnyCommand(input, "s", "stop"))
-        {
-          fileWatcherService.StopFileWatcher();
-          continue;
-        }
+                default:
+                    AnsiConsole.MarkupLine("[red]Unknown command.[/] Use [cyan]rebuild[/] ([cyan]b[/]) or [cyan]exit[/] ([cyan]e[/]).");
+                    break;
+            }
 
-        if (EqualsAnyCommand(input, "e", "exit"))
-        {
-          cancellationToken?.Cancel();
-          fileWatcherService.StopFileWatcher();
-          break;
+            AnsiConsole.WriteLine();
         }
-
-        ConsoleService.WriteLog($"The \"{input}\" command does not exist.", LogType.Info);
-      }
     }
 
     /// <summary>
-    /// Checks the input string to match one of the commands.
+    /// Renders the list of available commands.
     /// </summary>
-    /// <param name="input">Input string.</param>
-    /// <param name="commands">Command array.</param>
-    /// <returns>True if the input is equal to at least one of the commands in the array.</returns>
-    public static bool EqualsAnyCommand(string input, params string[] commands)
+    private static void WriteCommandsTable()
     {
-      foreach (var command in commands)
-      {
-        if (string.Equals(input, command, StringComparison.OrdinalIgnoreCase))
-        {
-          return true;
-        }
-      }
-      return false;
+        AnsiConsole.Clear();
+        AnsiConsole.WriteLine();
+
+        AnsiConsole.Write(
+            new Rule("[cyan1 bold]Welcome to Navigator.md[/]")
+                .LeftJustified()
+                .RuleStyle("cyan1"));
+
+        AnsiConsole.WriteLine();
+        AnsiConsole.MarkupLine(
+            "[grey]Tip:[/] type the full command or use its short alias shown in [cyan]( )[/].");
+
+        AnsiConsole.Write(CreateCommandsTable());
+        AnsiConsole.WriteLine();
     }
-  }
+
+    private static Table CreateCommandsTable()
+    {
+        var table = new Table
+        {
+            Border = TableBorder.Rounded,
+            Expand = true
+        };
+
+        table.BorderColor(Color.Grey);
+        table.AddColumn(new TableColumn("[bold]Command[/]").LeftAligned());
+        table.AddColumn(new TableColumn("[bold]Alias[/]").Centered());
+        table.AddColumn(new TableColumn("[bold]Description[/]").LeftAligned());
+
+        foreach (var command in CommandItems)
+        {
+            table.AddRow(
+                $"[darkcyan bold]{command.Name}[/]",
+                $"[yellow]({command.Alias})[/]",
+                $"[silver]{command.Description}[/]");
+        }
+
+        return table;
+    }
+
+    private static string ReadCommand()
+    {
+        return AnsiConsole
+            .Prompt(new TextPrompt<string>("[cyan]Command[/]:"))
+            .Trim()
+            .ToLowerInvariant();
+    }
+
+    private void RunRefresh(string message)
+    {
+        AnsiConsole.Status()
+            .Spinner(Spinner.Known.Dots)
+            .Start(message, _ =>
+            {
+                siteBuilder.Build();
+            });
+
+        AnsiConsole.MarkupLine("[green]Refresh completed.[/]");
+    }
+
+    private void RunRebuild(string message)
+    {
+        AnsiConsole.Status()
+            .Spinner(Spinner.Known.Dots)
+            .Start(message, _ =>
+            {
+                siteBuilder.Build(forceRebuild: true);
+            });
+
+        AnsiConsole.MarkupLine("[green]Rebuild completed.[/]");
+    }
+
+    private sealed record CommandItem(string Name, string Alias, string Description);
 }
