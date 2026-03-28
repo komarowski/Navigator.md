@@ -144,16 +144,17 @@ public class SiteGenerator(
         var sourceFolder = pathManager.SourceFolder;
         Directory.CreateDirectory(sourceFolder);
 
-        TransformNodePaths(tree.RootNode, pathManager.WikiFolder);
+        TransformNodePaths(tree.RootNode, pathManager.SourceFolder);
         var rootNodeJson = JsonSerializer.Serialize(tree.RootNode, CachedJsonOptions);
+
+        // TODO: remove unused fields (description, ...)
 
         var taskList = tasks.Select(t => new
         {
             name = t.Name,
             internalLink = pathManager.GetRelativeHtmlPath(t.File.FullName, pathManager.TasksFolder),
-            externalLink = t.ExternalLink,
-            description = t.Description,
-            status = t.Status
+            status = t.Status.ToString(),
+            lastUpdate = t.File.LastWriteTimeUtc
         }).ToList();
         var tasksJson = JsonSerializer.Serialize(taskList, CachedJsonOptions);
 
@@ -161,16 +162,13 @@ public class SiteGenerator(
         {
             question = q.Question,
             path = pathManager.GetRelativeHtmlPath(q.File.FullName, pathManager.QaFolder),
-            context = q.Context,
-            searchTags = q.SearchTags,
-            popularity = q.Popularity
+            popularity = q.Popularity,
+            lastUpdate = q.File.LastWriteTimeUtc
         }).OrderByDescending(q => q.popularity).ToList();
         var qaJson = JsonSerializer.Serialize(qaList, CachedJsonOptions);
 
-        var tagsJson = JsonSerializer.Serialize(ExtractUniqueTags(qaItems), CachedJsonOptions);
-
         var dataJsPath = Path.Combine(sourceFolder, "data.js");
-        var content = $"const rootNode = {rootNodeJson};\nconst tasks = {tasksJson};\nconst qa = {qaJson};\nconst qaTags = {tagsJson};";
+        var content = $"const rootNode = {rootNodeJson};\nconst tasks = {tasksJson};\nconst qa = {qaJson};";
 
         File.WriteAllText(dataJsPath, content);
     }
@@ -191,18 +189,6 @@ public class SiteGenerator(
         var htmlContent = MarkdownManager.ConvertToHtml(MarkdownTemplateGenerator.GetIndexTemplate());
         var htmlPage = HtmlTemplateGenerator.WrapContent(htmlContent, "index.html");
         File.WriteAllText(pathManager.IndexPath, htmlPage);
-    }
-
-    /// <summary>
-    /// Extracts all unique tags from Q&A items for tag-based filtering.
-    /// </summary>
-    private static List<string> ExtractUniqueTags(IEnumerable<QaItem> qaItems)
-    {
-        return qaItems
-            .SelectMany(q => q.SearchTags)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .OrderBy(t => t)
-            .ToList();
     }
 
     /// <summary>

@@ -6,9 +6,5 @@ public class TaskItem
 
     public required FileInfo File { get; set; }
 
-    public string? Description { get; set; }
-
-    public string? Status { get; set; }
-
-    public string? ExternalLink { get; set; }
+    public TaskItemStatus Status { get; set; } = TaskItemStatus.Open;
 }

@@ -34,24 +34,20 @@ public class TaskScannerTests
         CreateTaskMarkdownFile(
             "task1.md",
             "Task 1",
-            "Migrate from .NET 6 to .NET 10",
-            "open",
-            "https://example.com/task1");
+            0);
 
         CreateTaskMarkdownFile(
             "task2.md",
             "Task 2",
-            "Add unit tests",
-            "frozen");
+            1);
 
         CreateTaskMarkdownFile(
             "task3.md",
             "Task 3",
-            status: "closed");
+            2);
 
         CreateTaskMarkdownFile(
-           "task4.md",
-           description: "Deploy bug fix");
+           "task4.md");
 
         File.WriteAllText(Path.Combine(_testTasksFolder, "task5.md"), "# Empty task");
 
@@ -64,9 +60,9 @@ public class TaskScannerTests
 
         // Assert
         Assert.That(tasks, Has.Count.EqualTo(3));
-        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 1" && t.Status == "open" && t.ExternalLink == "https://example.com/task1"));
-        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 2" && t.Description == "Add unit tests" && t.Status == "frozen"));
-        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 3" && t.Status == "closed" && t.File.FullName == Path.Combine(_testTasksFolder, "task3.md")));
+        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 1" && t.Status == TaskItemStatus.Open));
+        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 2" && t.Status == TaskItemStatus.Frozen));
+        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 3" && t.Status == TaskItemStatus.Closed && t.File.FullName == Path.Combine(_testTasksFolder, "task3.md")));
     }
 
     [Test]
@@ -88,9 +84,7 @@ public class TaskScannerTests
     private void CreateTaskMarkdownFile(
         string fileName,
         string? taskName = null,
-        string? description = null,
-        string? status = null,
-        string? link = null)
+        int? status = null)
     {
         var sb = new StringBuilder();
         sb.AppendLine("---");
@@ -100,19 +94,9 @@ public class TaskScannerTests
             sb.AppendLine($"name: {taskName}");
         }
 
-        if (description != null)
-        {
-            sb.AppendLine($"description: {description}");
-        }
-
         if (status != null)
         {
             sb.AppendLine($"status: {status}");
-        }
-
-        if (link != null)
-        {
-            sb.AppendLine($"link: {link}");
         }
 
         sb.AppendLine("---");

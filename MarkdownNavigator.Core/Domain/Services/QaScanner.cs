@@ -39,10 +39,7 @@ public class QaScanner : IQaScanner
                 { 
                     Question = qaFrontMatter.Question,
                     File = file,
-                    Context = qaFrontMatter.Context,
-                    SearchTags = qaFrontMatter.SearchTags ?? [],
-                    Popularity = qaFrontMatter.Popularity,
-                    UpdatedUtc = file.LastWriteTimeUtc
+                    Popularity = qaFrontMatter.Popularity
                 };
 
                 qaItems.Add(qaItem);

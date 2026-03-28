@@ -38,16 +38,16 @@ public class TaskScanner : ITaskScanner
                 { 
                     Name = taskFrontMatter.Name,
                     File = new FileInfo(file),
-                    Description = taskFrontMatter.Description,
-                    Status = taskFrontMatter.Status,
-                    ExternalLink = taskFrontMatter.Link,
+                    Status = taskFrontMatter.Status
                 };
 
                 tasks.Add(task);
             }
         }
 
-        return tasks;
+        return tasks
+            .OrderBy(task => task.Status)
+            .ThenByDescending(task => task.File.CreationTimeUtc);
     }
 
     private static bool TryGetTaskFrontMatter(string markdownContent, out TaskFrontMatter? taskFrontMatter)

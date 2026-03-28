@@ -321,5 +321,5 @@ const main = (rootNode) => {
     setUpContentTable();
 };
 
-// "rootNode", "tasks", "qa", "qaTags" are loaded from "data.js"
+// "rootNode", "tasks", "qa" are loaded from "data.js"
 main(rootNode);

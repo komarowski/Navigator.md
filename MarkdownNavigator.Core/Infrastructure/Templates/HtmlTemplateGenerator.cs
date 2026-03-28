@@ -24,12 +24,12 @@ public static class HtmlTemplateGenerator
 
 <body>
   <header class=""site-header"">
-    <a class=""header-home"" href=""{root}index.html"">Home</a>
     <nav class=""header-tabs"" role=""tablist"">
       <button class=""header-tab"" data-tab=""wiki"" role=""tab"">Wiki</button>
       <button class=""header-tab"" data-tab=""tasks"" role=""tab"">Tasks</button>
       <button class=""header-tab"" data-tab=""qa"" role=""tab"">Q&amp;A</button>
     </nav>
+    <a class=""header-home"" href=""{root}index.html"">Navigator.md</a>
   </header>
 
   <main class=""main-content"">

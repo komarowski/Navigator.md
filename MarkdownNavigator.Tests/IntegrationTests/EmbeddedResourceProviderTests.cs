@@ -34,7 +34,7 @@ public class EmbeddedResourceProviderTests
             Assert.That(Directory.Exists(assetFolder), Is.True, "Assets subdirectory should be created");
             
             var files = Directory.GetFiles(assetFolder, "*.*", SearchOption.AllDirectories);
-            Assert.That(files.Length, Is.EqualTo(11), "Resources should be extracted to the target folder");
+            Assert.That(files.Length, Is.EqualTo(12), "Resources should be extracted to the target folder");
         }
         finally
         {

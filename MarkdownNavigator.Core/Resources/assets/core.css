@@ -2,17 +2,24 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 @font-face {
-    font-family: "Roboto";
-    src: url("fonts/Roboto-Bold.woff2") format("woff2");
-    font-weight: bold;
-    font-style: normal;
+  font-family: "Roboto";
+  src: url("fonts/Roboto-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: "Roboto";
-    src: url("fonts/Roboto-Regular.woff2") format("woff2");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Roboto";
+  src: url("fonts/Roboto-Medium.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("fonts/Roboto-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
 
@@ -20,17 +27,18 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 :root {
-  --link: #247aa8;
-  --link-hover: #1b5b7e;
+  --link: #195d95;
+  --link-hover: #144b79;
   --link-background: #ced7e1;
-  --link-background-hover: #e7ecf1;
-  --icon: #1b657e;
-  --border: #303b44;
-  --border-light: #4e606e;
-  --code: #c2d6e6;
-  --white: #fff;
-  --background: #f2f2f2;
-  --details: #f8fbff;
+  --link-background-hover: #edf3f8;
+  --sidebar-background: #f7f9fc;
+  --background: #eef2f6;
+  --white: #f8fafc;
+  --icon: #195d95;
+  --border: #253340;
+  --border-light: #d7dee6;
+  --code: #eef5fb;
+  --details: #fbfdff;
 }
 
 body {
@@ -77,21 +85,23 @@ body {
 
 .site-header {
   position: sticky;
-  top: 0;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  top: 0;
   width: 100%;
-  height: 50px;
-  padding: 0 16px;
+  height: 40px;
   box-sizing: border-box;
   box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3);
   background-color: var(--border);
-  z-index: 3;
+  z-index: 2;
   gap: 8px;
 }
 
 .header-home {
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+  font-size: 20px;
   font-weight: bold;
   color: var(--white);
   text-decoration: none;
@@ -104,35 +114,34 @@ body {
   }
 
 .header-tabs {
+  padding-left: 10px;
   display: flex;
+  align-items: end;
   gap: 2px;
 }
 
 .header-tab {
   padding: 6px 14px;
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 18px;
   color: var(--white);
   background: none;
   border: none;
-  border-radius: 4px;
+  border-radius: 4px 4px 0px 0px;
   cursor: pointer;
   transition: background-color 0.15s;
 }
 
   .header-tab:hover {
-    background-color: var(--border-light);
+    background-color: var(--sidebar-background);
+    color: var(--link-hover);
   }
 
 .header-tab--active {
-  background-color: var(--link-background);
+  background-color: var(--sidebar-background);
   color: var(--link-hover);
+  font-weight: bold;
 }
-
-  .header-tab--active:hover {
-    background-color: var(--link-background);
-  }
 
 
 /* Main Layout
@@ -140,7 +149,7 @@ body {
 
 .main-content {
   display: flex;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 40px);
   overflow: hidden;
 }
 
@@ -175,10 +184,10 @@ body {
 }
 
 .sidebar {
-  width: 300px;
-  min-width: 300px;
+  width: 320px;
+  min-width: 320px;
   border-right: 1px solid var(--border);
-  background-color: var(--white);
+  background-color: var(--sidebar-background);
   overflow-y: auto;
   z-index: 2;
 }
@@ -373,13 +382,16 @@ body {
   }
 
 .tree-folder-link {
+  width: 100%;
+  padding: 3px 0 3px 6px;
   color: var(--border);
   text-decoration: none;
-  font-weight: 500;
 }
 
   .tree-folder-link:hover {
     color: var(--link-hover);
+    border-radius: 5px;
+    background-color: var(--link-background);
   }
 
 .tree-item {
@@ -397,12 +409,11 @@ body {
   .tree-item:hover {
     color: var(--link-hover);
     border-radius: 5px;
-    background-color: var(--link-background-hover);
-    font-weight: bold;
+    background-color: var(--link-background);
   }
 
   .tree-item::before {
-    font-size: 25px;
+    font-size: 22px;
     margin-right: 5px;
     content: 'aa';
     color: transparent;
@@ -420,6 +431,32 @@ body {
   border-left: 2.5px dotted var(--border);
 }
 
+/* Tasks
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.task-open::before {
+  font-size: 22px;
+  margin-right: 5px;
+  content: 'aa';
+  color: transparent;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%231b657e'><path d='M440-760v-160h80v160h-80Zm266 110-55-55 112-115 56 57-113 113Zm54 210v-80h160v80H760ZM440-40v-160h80v160h-80ZM254-652 140-763l57-56 113 113-56 54Zm508 512L651-255l54-54 114 110-57 59ZM40-440v-80h160v80H40Zm157 300-56-57 112-112 29 27 29 28-114 114Zm113-170q-70-70-70-170t70-170q70-70 170-70t170 70q70 70 70 170t-70 170q-70 70-170 70t-170-70Zm283-57q47-47 47-113t-47-113q-47-47-113-47t-113 47q-47 47-47 113t47 113q47 47 113 47t113-47ZM480-480Z'/></svg>") center no-repeat;
+}
+
+.task-frozen::before {
+  font-size: 22px;
+  margin-right: 5px;
+  content: 'aa';
+  color: transparent;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%231b657e'><path d='M440-760v-160h80v160h-80Zm266 110-56-56 113-114 56 57-113 113Zm54 210v-80h160v80H760Zm3 299L650-254l56-56 114 112-57 57ZM254-650 141-763l57-57 112 114-56 56Zm-14 450h180q25 0 42.5-17.5T480-260q0-25-17-42.5T421-320h-51l-20-48q-14-33-44-52.5T240-440q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T40-320q0-83 58.5-141.5T240-520q60 0 109.5 32.5T423-400q58 0 97.5 43T560-254q-2 57-42.5 95.5T420-120H240Zm320-134q-5-20-10-39t-10-39q45-19 72.5-59t27.5-89q0-66-47-113t-113-47q-60 0-105 39t-53 99q-20-5-41-9t-41-9q14-88 82.5-144T480-720q100 0 170 70t70 170q0 77-44 138.5T560-254Zm-79-226Z'/></svg>") center no-repeat;
+}
+
+.task-closed::before {
+  font-size: 22px;
+  margin-right: 5px;
+  content: 'aa';
+  color: transparent;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%231b657e'><path d='M260-160q-91 0-155.5-63T40-377q0-78 47-139t123-78q25-92 100-149t170-57q117 0 198.5 81.5T760-520q69 8 114.5 59.5T920-340q0 75-52.5 127.5T740-160H260Zm0-80h480q42 0 71-29t29-71q0-42-29-71t-71-29h-60v-80q0-83-58.5-141.5T480-720q-83 0-141.5 58.5T280-520h-20q-58 0-99 41t-41 99q0 58 41 99t99 41Zm220-240Z'/></svg>") center no-repeat;
+}
 
 /* Mobile Responsive
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -488,7 +525,9 @@ body {
 }
 
   .tab-label:hover {
-    background: var(--border-light);
+    background: var(--code);
+    color: var(--link-hover);
+    outline: 2px solid var(--link-hover);
   }
 
 .tab-panel {

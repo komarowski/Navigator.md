@@ -16,6 +16,7 @@ public class EmbeddedResourceProvider(ILogger<EmbeddedResourceProvider> logger) 
         "MarkdownNavigator.Core.Resources.assets.core.js",
         "MarkdownNavigator.Core.Resources.assets.logo.ico",
         "MarkdownNavigator.Core.Resources.assets.fonts.Roboto-Regular.woff2",
+        "MarkdownNavigator.Core.Resources.assets.fonts.Roboto-Medium.woff2",
         "MarkdownNavigator.Core.Resources.assets.fonts.Roboto-Bold.woff2",
         "MarkdownNavigator.Core.Resources.assets.plugins.code.plugin.css",
         "MarkdownNavigator.Core.Resources.assets.plugins.code.plugin.js",

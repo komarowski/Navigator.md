@@ -10,6 +10,7 @@
     <None Remove="Resources\assets\core.css" />
     <None Remove="Resources\assets\core.js" />
     <None Remove="Resources\assets\fonts\Roboto-Bold.woff2" />
+    <None Remove="Resources\assets\fonts\Roboto-Medium.woff2" />
     <None Remove="Resources\assets\fonts\Roboto-Regular.woff2" />
     <None Remove="Resources\assets\logo.ico" />
     <None Remove="Resources\assets\plugins\code\plugin.css" />
@@ -24,6 +25,7 @@
     <EmbeddedResource Include="Resources\assets\core.css" />
     <EmbeddedResource Include="Resources\assets\core.js" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto-Bold.woff2" />
+    <EmbeddedResource Include="Resources\assets\fonts\Roboto-Medium.woff2" />
     <EmbeddedResource Include="Resources\assets\fonts\Roboto-Regular.woff2" />
     <EmbeddedResource Include="Resources\assets\logo.ico" />
     <EmbeddedResource Include="Resources\assets\plugins\code\plugin.css" />
