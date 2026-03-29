@@ -53,16 +53,19 @@ public class TreeBuilder : ITreeBuilder
     /// </summary>
     private static void ProcessMarkdownFiles(DirectoryInfo dirInfo, string rootFolder, TreeStructure tree, Node folderNode)
     {
-        // Handle index.md
-        var indexFile = new FileInfo(Path.Combine(dirInfo.FullName, IndexFileName));
-        
-        if (!indexFile.Exists)
+        // Handle index.md; ignore root _wiki folder
+        if (dirInfo.FullName != rootFolder)
         {
-            tree.IndexFilesToGenerate.Add(indexFile);
-        }
-        else
-        {
-            tree.MarkdownFilesToConvert.Add(indexFile);
+            var indexFile = new FileInfo(Path.Combine(dirInfo.FullName, IndexFileName));
+
+            if (!indexFile.Exists)
+            {
+                tree.IndexFilesToGenerate.Add(indexFile);
+            }
+            else
+            {
+                tree.MarkdownFilesToConvert.Add(indexFile);
+            }
         }
         
         // Process markdown files

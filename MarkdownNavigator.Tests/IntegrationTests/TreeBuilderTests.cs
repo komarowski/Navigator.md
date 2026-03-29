@@ -42,7 +42,6 @@ public class TreeBuilderTests
         CreateTestFolder();
 
         // Root level
-        File.WriteAllText(Path.Combine(_testRootPath, "index.md"), "# Root\n\nRoot documentation");
         File.WriteAllText(Path.Combine(_testRootPath, "intro.md"), "# Introduction\n\nIntro content");
 
         // docs folder
@@ -91,8 +90,8 @@ public class TreeBuilderTests
         // Act
         var tree = treeBuilder.GetTreeStructure(_testRootPath);
 
-        // Assert - Should have 7 markdown files
-        Assert.That(tree.MarkdownFilesToConvert, Has.Count.EqualTo(7));
+        // Assert
+        Assert.That(tree.MarkdownFilesToConvert, Has.Count.EqualTo(6));
     }
 
     [Test]
@@ -228,7 +227,7 @@ public class TreeBuilderTests
     {
         // Arrange - Mix of folders with/without index.md
         CreateTestFolder();
-        File.WriteAllText(Path.Combine(_testRootPath, "index.md"), "# Root");
+        File.WriteAllText(Path.Combine(_testRootPath, "root.md"), "# Root");
         File.WriteAllText(Path.Combine(_testRootPath, "readme.md"), "# Readme");
         
         var tutoPath = Path.Combine(_testRootPath, "tutorials");
@@ -248,7 +247,7 @@ public class TreeBuilderTests
         var tree = treeBuilder.GetTreeStructure(_testRootPath);
 
         // Assert
-        // Should track: index.md, readme.md, tutorials/index.md, tutorials/intro.md, 
+        // Should track: root.md, readme.md, tutorials/index.md, tutorials/intro.md, 
         //              tutorials/advanced.md, build/compile.md (6 files)
         Assert.That(tree.MarkdownFilesToConvert, Has.Count.EqualTo(6));
         // Should generate: build/index.md (1 file)
