@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../assets/logo.ico">
+  <link rel="stylesheet" href="../assets/core.css" />
+  <link rel="stylesheet" href="../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_wiki/intro.html" data-root="../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="markdownnavigator.md-demo-wiki">MarkdownNavigator.md demo wiki</h1>
+<p>This wiki is a demo content set for the <code>MarkdownNavigator</code> repository. It is written in the same folder convention that the app expects, so it can be copied into a source folder and rendered by the console generator.</p>
+<h2 id="what-the-project-does">What the project does</h2>
+<p><code>MarkdownNavigator</code> converts local Markdown content into a static HTML knowledge base with:</p>
+<ul>
+<li>a wiki tree from <code>_wiki</code></li>
+<li>a task list from <code>_tasks</code></li>
+<li>a Q&amp;A section from <code>_qa</code></li>
+<li>generated <code>data.js</code> for client-side navigation</li>
+<li>embedded CSS, JS, fonts, and plugins copied into <code>assets</code></li>
+</ul>
+<h2 id="solution-structure">Solution structure</h2>
+<ul>
+<li><code>MarkdownNavigator.Console</code> — app entry point, DI, command loop, watcher, console logging</li>
+<li><code>MarkdownNavigator.Core</code> — domain, markdown processing, site generation, templates, assets</li>
+<li><code>MarkdownNavigator.Tests</code> — integration tests for scanners, generation, and resources</li>
+</ul>
+<h2 id="expected-content-folders">Expected content folders</h2>
+<p>The generator uses these folders inside the configured source folder:</p>
+<ul>
+<li><code>_wiki</code> — hierarchical documentation</li>
+<li><code>_tasks</code> — flat or nested task notes with front matter</li>
+<li><code>_qa</code> — flat or nested Q&amp;A notes with front matter</li>
+</ul>
+<h2 id="main-flow">Main flow</h2>
+<ol>
+<li><code>Program.cs</code> builds the host and registers services.</li>
+<li><code>ConsoleCommandService</code> runs the initial build and starts file watching.</li>
+<li><code>SiteBuilder</code> collects wiki, tasks, and Q&amp;A data.</li>
+<li><code>SiteGenerator</code> converts markdown to HTML, writes <code>data.js</code>, copies assets, and generates <code>index.html</code>.</li>
+</ol>
+<h2 id="demo-reading-order">Demo reading order</h2>
+<ul>
+<li><a href="docs/architecture-overview.html" target="_blank" rel="noopener noreferrer">Architecture overview</a></li>
+<li><a href="docs/build-pipeline.html" target="_blank" rel="noopener noreferrer">Build pipeline</a></li>
+<li><a href="docs/markdown-features.html" target="_blank" rel="noopener noreferrer">Markdown features</a></li>
+<li><a href="docs/frontend-navigation.html" target="_blank" rel="noopener noreferrer">Frontend navigation</a></li>
+<li><a href="docs/testing.html" target="_blank" rel="noopener noreferrer">Testing</a></li>
+</ul>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../data.js"></script>
+  <script src="../assets/core.js"></script>
+  <script src="../assets/plugins/prism/plugin.js"></script>
+  <script src="../assets/plugins/slider/plugin.js"></script>
+  <script src="../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../../assets/logo.ico">
+  <link rel="stylesheet" href="../../assets/core.css" />
+  <link rel="stylesheet" href="../../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_wiki/docs/frontend-navigation.html" data-root="../../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="frontend-navigation">Frontend navigation</h1>
+<p>The generated HTML shell uses:</p>
+<ul>
+<li><code>assets/core.css</code></li>
+<li><code>assets/core.js</code></li>
+<li>syntax highlighting and utility plugins</li>
+</ul>
+<h2 id="main-page-layout">Main page layout</h2>
+<p><code>HtmlTemplateGenerator.WrapContent(...)</code> creates a standard page with:</p>
+<ul>
+<li>header tabs: Wiki / Tasks / Q&amp;A</li>
+<li>sidebar</li>
+<li>main markdown article</li>
+<li>table of contents area</li>
+</ul>
+<h2 id="navigation-data">Navigation data</h2>
+<p><code>SiteGenerator.GenerateDataJs(...)</code> serializes:</p>
+<ul>
+<li><code>rootNode</code> — wiki tree</li>
+<li><code>tasks</code> — task metadata list</li>
+<li><code>qa</code> — Q&amp;A metadata list</li>
+</ul>
+<h2 id="sidebar-behavior">Sidebar behavior</h2>
+<p><code>core.js</code> builds the sidebar in the browser:</p>
+<ul>
+<li>wiki tab renders the tree recursively</li>
+<li>tasks tab renders a flat list</li>
+<li>Q&amp;A tab renders a flat list</li>
+</ul>
+<h2 id="path-handling">Path handling</h2>
+<p>Relative paths are calculated so pages can link correctly regardless of nesting depth.</p>
+<h2 id="mobile-behavior">Mobile behavior</h2>
+<p>The sidebar is hidden off-screen on small screens and opened with a CSS transform class.</p>
+<h2 id="current-page-handling">Current-page handling</h2>
+<p>The script highlights the current page and expands parent folders in the tree.</p>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../data.js"></script>
+  <script src="../../assets/core.js"></script>
+  <script src="../../assets/plugins/prism/plugin.js"></script>
+  <script src="../../assets/plugins/slider/plugin.js"></script>
+  <script src="../../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

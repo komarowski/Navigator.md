@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../../assets/logo.ico">
+  <link rel="stylesheet" href="../../assets/core.css" />
+  <link rel="stylesheet" href="../../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_wiki/docs/markdown-features.html" data-root="../../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="markdown-features">Markdown features</h1>
+<p>The project uses <code>Markdig</code> with a shared pipeline in <code>MarkdownManager</code>.</p>
+<h2 id="enabled-features">Enabled features</h2>
+<ul>
+<li>YAML front matter</li>
+<li>advanced markdown extensions</li>
+<li>custom link rendering</li>
+<li>custom tabs syntax</li>
+</ul>
+<h2 id="front-matter-usage">Front matter usage</h2>
+<h3 id="task-pages">Task pages</h3>
+<p>Task metadata is read into <code>TaskFrontMatter</code>:</p>
+<pre><code class="language-yaml">---
+name: Add rebuild command
+status: Open
+---
+</code></pre>
+<p>Status values come from <code>TaskItemStatus</code>:</p>
+<ul>
+<li><code>Open</code></li>
+<li><code>Frozen</code></li>
+<li><code>Closed</code></li>
+</ul>
+<h3 id="qa-pages">Q&amp;A pages</h3>
+<p>Q&amp;A metadata is read into <code>QaFrontMatter</code>:</p>
+<pre><code class="language-yaml">---
+question: How does data.js get generated?
+popularity: 2
+---
+</code></pre>
+<h2 id="title-fallback">Title fallback</h2>
+<p>If front matter is missing, the scanners fall back to:</p>
+<ul>
+<li>first <code># Heading</code></li>
+<li>otherwise file name without extension</li>
+</ul>
+<h2 id="custom-links">Custom links</h2>
+<p><code>CustomLinkRenderer</code> adds:</p>
+<ul>
+<li><code>target=&quot;_blank&quot;</code></li>
+<li><code>rel=&quot;noopener noreferrer&quot;</code></li>
+</ul>
+<p>for non-image links.</p>
+<h2 id="custom-tabs">Custom tabs</h2>
+<p>Tabs are implemented as a custom Markdig block:</p>
+<pre><code class="language-markdown">!&lt;tabs&gt; sample
+&lt;tab&gt; First
+text
+&lt;tab&gt; Second
+text
+&lt;/tabs&gt;
+</code></pre>
+<p>The renderer turns this into a radio-button based tab UI.</p>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../data.js"></script>
+  <script src="../../assets/core.js"></script>
+  <script src="../../assets/plugins/prism/plugin.js"></script>
+  <script src="../../assets/plugins/slider/plugin.js"></script>
+  <script src="../../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../assets/logo.ico">
+  <link rel="stylesheet" href="../assets/core.css" />
+  <link rel="stylesheet" href="../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_tasks/add-more-unit-and-integration-tests.html" data-root="../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="add-more-uts-and-integration-tests">Add more UTs and integration tests</h1>
+<h2 id="goal">Goal</h2>
+<p>Improve confidence in refactoring and new feature work.</p>
+<h2 id="suggested-areas">Suggested areas</h2>
+<h3 id="unit-tests">Unit tests</h3>
+<ul>
+<li><code>PathManager</code></li>
+<li><code>MarkdownManager</code></li>
+<li>task / Q&amp;A metadata fallback logic</li>
+<li>path transformation helpers</li>
+<li>frontend helper logic where possible</li>
+</ul>
+<h3 id="integration-tests">Integration tests</h3>
+<ul>
+<li><code>TreeBuilder</code></li>
+<li><code>SiteGenerator</code></li>
+<li>full build output verification</li>
+<li>incremental rebuild scenarios</li>
+<li>generated navigation data</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>Prioritize tests around the parts that change most often.</p>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../data.js"></script>
+  <script src="../assets/core.js"></script>
+  <script src="../assets/plugins/prism/plugin.js"></script>
+  <script src="../assets/plugins/slider/plugin.js"></script>
+  <script src="../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

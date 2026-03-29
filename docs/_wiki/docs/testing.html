@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../../assets/logo.ico">
+  <link rel="stylesheet" href="../../assets/core.css" />
+  <link rel="stylesheet" href="../../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_wiki/docs/testing.html" data-root="../../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="testing">Testing</h1>
+<p>The test project is <code>MarkdownNavigator.Tests</code>.</p>
+<h2 id="style">Style</h2>
+<p>The current tests are mostly integration tests. They build real folders in temporary paths and verify produced files.</p>
+<h2 id="covered-areas">Covered areas</h2>
+<h3 id="embeddedresourceprovidertests">EmbeddedResourceProviderTests</h3>
+<p>Verifies that:</p>
+<ul>
+<li>the target folder is created</li>
+<li>the <code>assets</code> subfolder is created</li>
+<li>embedded files are extracted</li>
+</ul>
+<h3 id="qascannertests">QaScannerTests</h3>
+<p>Verifies that:</p>
+<ul>
+<li>markdown files are found recursively</li>
+<li>front matter is read</li>
+<li>fallback title logic works</li>
+<li>invalid or missing front matter does not break scanning</li>
+</ul>
+<h3 id="sitebuildertests">SiteBuilderTests</h3>
+<p>Verifies that:</p>
+<ul>
+<li>build does not fail when source folder is missing</li>
+<li>expected output HTML and <code>data.js</code> are generated</li>
+<li>generated site structure matches a realistic input set</li>
+</ul>
+<h2 id="good-extension-points">Good extension points</h2>
+<p>Useful next tests:</p>
+<ul>
+<li><code>TaskScanner</code> sort order and fallback title behavior</li>
+<li><code>TreeBuilder</code> handling of missing <code>index.md</code></li>
+<li><code>SiteGenerator</code> incremental build skipping</li>
+<li><code>MarkdownManager</code> custom tabs rendering</li>
+<li><code>PathManager</code> relative path conversion</li>
+</ul>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../data.js"></script>
+  <script src="../../assets/core.js"></script>
+  <script src="../../assets/plugins/prism/plugin.js"></script>
+  <script src="../../assets/plugins/slider/plugin.js"></script>
+  <script src="../../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

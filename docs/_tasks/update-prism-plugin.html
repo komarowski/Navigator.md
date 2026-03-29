@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../assets/logo.ico">
+  <link rel="stylesheet" href="../assets/core.css" />
+  <link rel="stylesheet" href="../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_tasks/update-prism-plugin.html" data-root="../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="update-prism-plugin">Update prism plugin</h1>
+<h2 id="goal">Goal</h2>
+<p>Update the Prism syntax-highlighting plugin bundle used in embedded assets.</p>
+<h2 id="check-after-update">Check after update</h2>
+<ul>
+<li>supported languages still work</li>
+<li>theme still matches the site</li>
+<li>no regression in code block rendering</li>
+<li>plugin files are still extracted correctly</li>
+<li>copy-code behavior still works together with Prism markup</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>Recheck generated HTML pages with:</p>
+<ul>
+<li>C#</li>
+<li>SQL</li>
+<li>JavaScript</li>
+<li>PHP</li>
+<li>Markdown</li>
+</ul>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../data.js"></script>
+  <script src="../assets/core.js"></script>
+  <script src="../assets/plugins/prism/plugin.js"></script>
+  <script src="../assets/plugins/slider/plugin.js"></script>
+  <script src="../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

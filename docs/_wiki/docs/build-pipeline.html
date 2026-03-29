@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../../assets/logo.ico">
+  <link rel="stylesheet" href="../../assets/core.css" />
+  <link rel="stylesheet" href="../../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_wiki/docs/build-pipeline.html" data-root="../../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="build-pipeline">Build pipeline</h1>
+<p>This page describes the end-to-end generation flow.</p>
+<h2 id="entry-point">Entry point</h2>
+<p><code>Program.cs</code> configures services and resolves <code>ConsoleCommandService</code>.</p>
+<h2 id="runtime-workflow">Runtime workflow</h2>
+<p><code>ConsoleCommandService.RunAsync()</code> does the following:</p>
+<ol>
+<li>prints the available commands</li>
+<li>runs an initial refresh</li>
+<li>starts the file watcher</li>
+<li>waits for console commands</li>
+</ol>
+<h2 id="sitebuilder-pipeline">SiteBuilder pipeline</h2>
+<p><code>SiteBuilder.Build()</code>:</p>
+<ol>
+<li>verifies that the configured source folder exists</li>
+<li>builds the wiki tree from <code>_wiki</code></li>
+<li>scans <code>_tasks</code></li>
+<li>scans <code>_qa</code></li>
+<li>creates a <code>SiteContent</code> aggregate</li>
+<li>calls <code>ISiteGenerator.GenerateWeb(...)</code></li>
+</ol>
+<h2 id="sitegenerator-pipeline">SiteGenerator pipeline</h2>
+<p><code>SiteGenerator.GenerateWeb(...)</code> performs these steps:</p>
+<ol>
+<li>create missing <code>index.md</code> files for wiki folders without one</li>
+<li>convert wiki markdown to HTML</li>
+<li>convert task markdown to HTML</li>
+<li>convert Q&amp;A markdown to HTML</li>
+<li>generate <code>data.js</code></li>
+<li>copy embedded assets into <code>assets</code></li>
+<li>generate the root <code>index.html</code></li>
+</ol>
+<h2 id="incremental-behavior">Incremental behavior</h2>
+<p><code>ConvertMarkdownToHtml(...)</code> skips unchanged pages unless:</p>
+<ul>
+<li>the HTML file does not exist</li>
+<li>the markdown file is newer than the HTML file</li>
+<li><code>forceRebuild</code> is <code>true</code></li>
+</ul>
+<h2 id="watcher-behavior">Watcher behavior</h2>
+<p><code>FileWatcherService</code> debounces multiple file system events and chooses the stronger action:</p>
+<ul>
+<li>markdown content change → refresh</li>
+<li>create, delete, rename, or watcher error → rebuild</li>
+</ul>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../data.js"></script>
+  <script src="../../assets/core.js"></script>
+  <script src="../../assets/plugins/prism/plugin.js"></script>
+  <script src="../../assets/plugins/slider/plugin.js"></script>
+  <script src="../../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

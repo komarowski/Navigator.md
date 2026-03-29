@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../../assets/logo.ico">
+  <link rel="stylesheet" href="../../assets/core.css" />
+  <link rel="stylesheet" href="../../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_wiki/snippets/demo-content-format.html" data-root="../../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="demo-content-format">Demo content format</h1>
+<p>This page shows the expected content layout for users of the generator.</p>
+<h2 id="folder-structure">Folder structure</h2>
+<pre><code class="language-text">MyWiki/
+├─ _wiki/
+│  ├─ intro.md
+│  └─ docs/
+│     └─ getting-started.md
+├─ _tasks/
+│  └─ improve-sidebar.md
+└─ _qa/
+   └─ how-does-build-work.md
+</code></pre>
+<h2 id="minimal-wiki-page">Minimal wiki page</h2>
+<pre><code class="language-markdown"># Introduction
+
+Some project notes here.
+</code></pre>
+<h2 id="minimal-task-page">Minimal task page</h2>
+<pre><code class="language-markdown">---
+name: Improve sidebar
+status: Open
+---
+
+# Improve sidebar
+
+Notes here.
+</code></pre>
+<h2 id="minimal-qa-page">Minimal Q&amp;A page</h2>
+<pre><code class="language-markdown">---
+question: How does the build work?
+popularity: 1
+---
+
+# How does the build work?
+
+Answer here.
+</code></pre>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../data.js"></script>
+  <script src="../../assets/core.js"></script>
+  <script src="../../assets/plugins/prism/plugin.js"></script>
+  <script src="../../assets/plugins/slider/plugin.js"></script>
+  <script src="../../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

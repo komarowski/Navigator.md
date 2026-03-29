@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../../assets/logo.ico">
+  <link rel="stylesheet" href="../../assets/core.css" />
+  <link rel="stylesheet" href="../../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_wiki/docs/architecture-overview.html" data-root="../../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="architecture-overview">Architecture overview</h1>
+<p><code>MarkdownNavigator</code> is split into three projects.</p>
+<h2 id="markdownnavigator.console">1. MarkdownNavigator.Console</h2>
+<p>This project provides the executable shell around the generator.</p>
+<h3 id="main-responsibilities">Main responsibilities</h3>
+<ul>
+<li>read configuration from <code>appsettings.json</code></li>
+<li>configure dependency injection</li>
+<li>run a command loop with Spectre.Console</li>
+<li>watch the source folder for file changes</li>
+<li>trigger refresh or rebuild operations</li>
+</ul>
+<h3 id="main-classes">Main classes</h3>
+<ul>
+<li><code>Program</code> — bootstraps host, services, and logging</li>
+<li><code>ConsoleCommandService</code> — command UI for <code>rebuild</code> and <code>exit</code></li>
+<li><code>FileWatcherService</code> — watches source changes and debounces build actions</li>
+<li><code>SpectreConsoleLogger</code> / <code>SpectreConsoleLoggerProvider</code> — custom console logging</li>
+</ul>
+<h2 id="markdownnavigator.core">2. MarkdownNavigator.Core</h2>
+<p>This is the main application logic.</p>
+<h3 id="application-layer">Application layer</h3>
+<ul>
+<li><code>ISiteBuilder</code></li>
+<li><code>SiteBuilder</code></li>
+</ul>
+<p><code>SiteBuilder</code> orchestrates wiki scanning, tasks scanning, Q&amp;A scanning, and passes the result to the generator.</p>
+<h3 id="domain-layer">Domain layer</h3>
+<p>Main domain pieces:</p>
+<ul>
+<li>entities: <code>Node</code>, <code>TreeStructure</code>, <code>TaskItem</code>, <code>QaItem</code>, <code>SiteContent</code></li>
+<li>services: <code>TreeBuilder</code>, <code>TaskScanner</code>, <code>QaScanner</code>, <code>PathManager</code></li>
+<li>markdown logic: <code>MarkdownManager</code></li>
+<li>markdown extensions: custom links and custom tabs block</li>
+</ul>
+<h3 id="infrastructure-layer">Infrastructure layer</h3>
+<ul>
+<li><code>SiteGenerator</code></li>
+<li><code>EmbeddedResourceProvider</code></li>
+<li><code>HtmlTemplateGenerator</code></li>
+<li><code>MarkdownTemplateGenerator</code></li>
+</ul>
+<p>This layer writes files, templates pages, serializes navigation data, and extracts embedded static resources.</p>
+<h2 id="markdownnavigator.tests">3. MarkdownNavigator.Tests</h2>
+<p>The tests are integration-focused and cover:</p>
+<ul>
+<li>resource extraction</li>
+<li>task/Q&amp;A scanning</li>
+<li>site generation outputs</li>
+</ul>
+<h2 id="dependency-direction">Dependency direction</h2>
+<p>The executable depends on <code>Core</code>.
+The tests depend on <code>Core</code>.
+<code>Core</code> contains the reusable logic and embedded assets.</p>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../data.js"></script>
+  <script src="../../assets/core.js"></script>
+  <script src="../../assets/plugins/prism/plugin.js"></script>
+  <script src="../../assets/plugins/slider/plugin.js"></script>
+  <script src="../../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../../assets/logo.ico">
+  <link rel="stylesheet" href="../../assets/core.css" />
+  <link rel="stylesheet" href="../../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_wiki/docs/extension-points.html" data-root="../../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="extension-points">Extension points</h1>
+<p>This project is already structured so new features can be added without rewriting the whole generator.</p>
+<h2 id="good-places-to-extend">Good places to extend</h2>
+<h3 id="new-markdown-syntax">New markdown syntax</h3>
+<p>Add a new Markdig extension beside:</p>
+<ul>
+<li><code>CustomLinkExtension</code></li>
+<li><code>TabsExtension</code></li>
+</ul>
+<p>Then register it in <code>MarkdownManager</code>.</p>
+<h3 id="new-metadata-types">New metadata types</h3>
+<p>Add front matter models and scanners similar to:</p>
+<ul>
+<li><code>TaskFrontMatter</code></li>
+<li><code>QaFrontMatter</code></li>
+<li><code>TaskScanner</code></li>
+<li><code>QaScanner</code></li>
+</ul>
+<h3 id="new-ui-plugins">New UI plugins</h3>
+<p>Add embedded resources and register them in:</p>
+<ul>
+<li><code>EmbeddedResourceProvider.Resources</code></li>
+<li><code>HtmlTemplateGenerator.WrapContent(...)</code></li>
+</ul>
+<h3 id="new-commands">New commands</h3>
+<p>Extend <code>ConsoleCommandService.CommandItems</code> and add a matching command case.</p>
+<h2 id="improvement-ideas">Improvement ideas</h2>
+<ul>
+<li>persist build state instead of using only file timestamps</li>
+<li>add search index generation</li>
+<li>add tag filtering for tasks and Q&amp;A</li>
+<li>split <code>core.js</code> into smaller frontend modules</li>
+<li>add unit tests for markdown parsing edge cases</li>
+</ul>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../data.js"></script>
+  <script src="../../assets/core.js"></script>
+  <script src="../../assets/plugins/prism/plugin.js"></script>
+  <script src="../../assets/plugins/slider/plugin.js"></script>
+  <script src="../../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../assets/logo.ico">
+  <link rel="stylesheet" href="../assets/core.css" />
+  <link rel="stylesheet" href="../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_tasks/migrate-to-dotnet-10.html" data-root="../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="migrate-to.net-10">Migrate to .NET 10</h1>
+<h2 id="goal">Goal</h2>
+<p>Update the solution from the current target framework to .NET 10.</p>
+<h2 id="areas-to-verify">Areas to verify</h2>
+<ul>
+<li>console project target framework</li>
+<li>core project target framework</li>
+<li>test project target framework</li>
+<li>package compatibility</li>
+<li>CI / local build behavior</li>
+<li>watcher and file system behavior after migration</li>
+</ul>
+<h2 id="done-criteria">Done criteria</h2>
+<ul>
+<li>solution builds successfully</li>
+<li>tests pass</li>
+<li>generated site still works the same</li>
+</ul>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../data.js"></script>
+  <script src="../assets/core.js"></script>
+  <script src="../assets/plugins/prism/plugin.js"></script>
+  <script src="../assets/plugins/slider/plugin.js"></script>
+  <script src="../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

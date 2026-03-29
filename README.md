@@ -17,6 +17,8 @@ The main purpose of this application is to organize your bookmarks, notes, artic
 
 ## Demo
 
+The repository also includes a `docs/` folder that can be used both for demo content and for project documentation.
+
 ![](https://github.com/komarowski/Navigator.md/blob/main/demo/demo.gif)
 
 ## How it works

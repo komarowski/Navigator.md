@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../assets/logo.ico">
+  <link rel="stylesheet" href="../assets/core.css" />
+  <link rel="stylesheet" href="../assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="../assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="../index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="_qa/how-are-assets-deployed.html" data-root="../" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="how-are-assets-deployed-into-the-output-folder">How are assets deployed into the output folder?</h1>
+<p><code>EmbeddedResourceProvider.CopyPredefinedResources(...)</code> extracts embedded files from the assembly into the source folder.</p>
+<p>This includes:</p>
+<ul>
+<li><code>core.css</code></li>
+<li><code>core.js</code></li>
+<li>fonts</li>
+<li>Prism plugin files</li>
+<li>slider plugin files</li>
+<li>copy-code plugin files</li>
+</ul>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../data.js"></script>
+  <script src="../assets/core.js"></script>
+  <script src="../assets/plugins/prism/plugin.js"></script>
+  <script src="../assets/plugins/slider/plugin.js"></script>
+  <script src="../assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>

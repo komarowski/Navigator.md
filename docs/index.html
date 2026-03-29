@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Navigator.md</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/logo.ico">
+  <link rel="stylesheet" href="./assets/core.css" />
+  <link rel="stylesheet" href="./assets/plugins/code/plugin.css" />
+  <link rel="stylesheet" href="./assets/plugins/slider/plugin.css" />
+  <link rel="stylesheet" href="./assets/plugins/prism/plugin.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="header-tabs" role="tablist">
+      <button class="header-tab" data-tab="wiki" role="tab">Wiki</button>
+      <button class="header-tab" data-tab="tasks" role="tab">Tasks</button>
+      <button class="header-tab" data-tab="qa" role="tab">Q&amp;A</button>
+    </nav>
+    <a class="header-home" href="./index.html">Navigator.md</a>
+  </header>
+
+  <main class="main-content">
+    <aside id="sidebar" class="sidebar" role="tabpanel">
+      <div id="nav-tree" data-node="index.html" data-root="./" class="navigation-tree"></div>
+    </aside>
+
+    <div class="page-content">
+      <div class="text-container">
+        <div class="content-flex">
+          <article class="content-block">
+            <div id="markdown" class="markdown">
+              <h1 id="navigator.md">Navigator.md</h1>
+<p>Local wiki for docs, tasks, and Q&amp;A.</p>
+<h2 id="quick-syntax">Quick Syntax</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bold</td>
+<td><code>**Text**</code></td>
+</tr>
+<tr>
+<td>Italic</td>
+<td><code>*Text*</code></td>
+</tr>
+<tr>
+<td>Bold + Italic</td>
+<td><code>***Text***</code></td>
+</tr>
+<tr>
+<td>Strike</td>
+<td><code>~~Text~~</code></td>
+</tr>
+<tr>
+<td>Code</td>
+<td><code>`code`</code></td>
+</tr>
+<tr>
+<td>Link</td>
+<td><code>[Site](https://example.com)</code></td>
+</tr>
+<tr>
+<td>Image</td>
+<td><code>![Alt](image.jpg)</code></td>
+</tr>
+<tr>
+<td>Code emoji</td>
+<td><code>🔥</code> · <code>🐞</code> · <code>🚀</code> · <code>🛠️</code> · <code>🔍</code> · <code>🤖</code></td>
+</tr>
+<tr>
+<td>Notes emoji</td>
+<td><code>✅</code> · <code>❌</code> · <code>⚠️</code> · <code>📌</code> · <code>💡</code> · <code>💀</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="style-snippet">Style snippet</h2>
+<pre><code class="language-markdown">&lt;style&gt;
+r { color: Red }
+sm { font-size: 0.6rem }
+&lt;/style&gt;
+</code></pre>
+<h2 id="task-list-snippet">Task list snippet</h2>
+<pre><code class="language-markdown">- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
+</code></pre>
+<h2 id="details-snippet">Details snippet</h2>
+<pre><code class="language-markdown">&lt;details&gt;
+&lt;summary&gt;SqlScript&lt;/summary&gt;
+
+```sql
+select * from table
+```
+&lt;/details&gt;
+</code></pre>
+<h2 id="tabs-snippet">Tabs snippet</h2>
+<pre><code class="language-markdown">!&lt;tabs&gt;
+&lt;tab&gt; TabHeader1
+&lt;/tabs&gt;
+</code></pre>
+<h2 id="image-silder-snippet">Image silder snippet</h2>
+<pre><code class="language-html">&lt;div class=&quot;slider&quot;&gt;
+&lt;div class=&quot;slide&quot;&gt;
+	&lt;img src=&quot;02-sync-request-asp.net-core.png&quot; title=&quot;&quot;&gt;
+	&lt;span&gt;Image source&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;slide&quot;&gt;
+	&lt;img src=&quot;03-async-request-asp.net-core.png&quot; alt=&quot;&quot; title=&quot;&quot;&gt;
+	&lt;span&gt;&lt;a href=&quot;https://code-maze.com/asynchronous-programming-with-async-and-await-in-asp-net-core/&quot;&gt;Image source&lt;/a&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;button class=&quot;button-slider button-slider--prev&quot;&gt; &amp;lt; &lt;/button&gt;
+&lt;button class=&quot;button-slider button-slider--next&quot;&gt; &amp;gt; &lt;/button&gt;&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<h2 id="task-page">Task page</h2>
+<pre><code class="language-markdown">---
+name: TaskName
+status: 0
+---
+
+# Task
+
+## Links
+
+- [Reference](https://example.com)
+
+## Description
+
+Describe the task here.
+
+## Notes
+
+- Key point 1
+- Key point 2
+
+</code></pre>
+<h2 id="qa-page">Q&amp;A page</h2>
+<pre><code class="language-markdown">---
+question: How to debug async requests in ASP.NET Core?
+popularity: 0
+---
+
+# How to debug async requests in ASP.NET Core?
+
+## Answer
+
+Write the answer here.
+
+## Notes
+
+- Add examples
+- Add pitfalls
+- Add links to related pages
+
+</code></pre>
+
+            </div>
+          </article>
+
+          <nav class="content-table-block">
+            <div class="content-table-container">
+              <ul id="content-table" class="content-table"></ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="./data.js"></script>
+  <script src="./assets/core.js"></script>
+  <script src="./assets/plugins/prism/plugin.js"></script>
+  <script src="./assets/plugins/slider/plugin.js"></script>
+  <script src="./assets/plugins/code/plugin.js"></script>
+</body>
+
+</html>
