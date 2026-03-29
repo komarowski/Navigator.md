@@ -141,18 +141,17 @@ public class SiteGenerator(
     /// </summary>
     private void GenerateDataJs(TreeStructure tree, IEnumerable<TaskItem> tasks, IEnumerable<QaItem> qaItems)
     {
+        // TODO: minimize json, js 
         var sourceFolder = pathManager.SourceFolder;
         Directory.CreateDirectory(sourceFolder);
 
         TransformNodePaths(tree.RootNode, pathManager.SourceFolder);
         var rootNodeJson = JsonSerializer.Serialize(tree.RootNode, CachedJsonOptions);
 
-        // TODO: remove unused fields (description, ...)
-
         var taskList = tasks.Select(t => new
         {
             name = t.Name,
-            internalLink = pathManager.GetRelativeHtmlPath(t.File.FullName, pathManager.TasksFolder),
+            path = pathManager.GetRelativeHtmlPath(t.File.FullName, pathManager.TasksFolder),
             status = t.Status.ToString(),
             lastUpdate = t.File.LastWriteTimeUtc
         }).ToList();

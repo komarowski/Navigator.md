@@ -46,23 +46,23 @@ public class TaskScannerTests
             "Task 3",
             2);
 
-        CreateTaskMarkdownFile(
-           "task4.md");
+        File.WriteAllText(Path.Combine(_testTasksFolder, "task4.md"), "Empty task");
 
-        File.WriteAllText(Path.Combine(_testTasksFolder, "task5.md"), "# Empty task");
+        File.WriteAllText(Path.Combine(_testTasksFolder, "task5.md"), "---\nname: Task 6\n--\n\n# Incorrect fontmatter");
 
-        File.WriteAllText(Path.Combine(_testTasksFolder, "task6.md"), "---\nname: Task 6\n--\n\n# Incorrect fontmatter");
-
-        File.WriteAllText(Path.Combine(_testTasksFolder, "task7.md"), "---\nNaMe: Task 7\n---\n\n# Incorrect fontmatter field");
+        File.WriteAllText(Path.Combine(_testTasksFolder, "task6.md"), "---\nNaMe: Task 7\n---\n\n# Incorrect fontmatter field");
 
         // Act
         var tasks = _taskScanner.ScanForTasks(_testTasksFolder).ToList();
 
         // Assert
-        Assert.That(tasks, Has.Count.EqualTo(3));
+        Assert.That(tasks, Has.Count.EqualTo(6));
         Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 1" && t.Status == TaskItemStatus.Open));
         Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 2" && t.Status == TaskItemStatus.Frozen));
         Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Task 3" && t.Status == TaskItemStatus.Closed && t.File.FullName == Path.Combine(_testTasksFolder, "task3.md")));
+        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "task4" && t.Status == TaskItemStatus.Open));
+        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Incorrect fontmatter" && t.Status == TaskItemStatus.Open));
+        Assert.That(tasks, Has.Some.Matches<TaskItem>(t => t.Name == "Incorrect fontmatter field" && t.Status == TaskItemStatus.Open));
     }
 
     [Test]

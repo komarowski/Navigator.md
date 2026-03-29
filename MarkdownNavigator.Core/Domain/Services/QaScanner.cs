@@ -1,9 +1,3 @@
-using Markdig.Extensions.Yaml;
-using Markdig.Syntax;
-using YamlDotNet.Core;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-
 namespace MarkdownNavigator.Core.Domain;
 
 public class QaScanner : IQaScanner
@@ -22,64 +16,36 @@ public class QaScanner : IQaScanner
 
         foreach (var file in files)
         {
-            var markdownContent = File.ReadAllText(file.FullName);
-            if (TryGetQaFrontMatter(markdownContent, out var qaFrontMatter))
+            string? question = null;
+            int popularity = 0;
+
+            if (MarkdownManager.TryReadFrontMatter<QaFrontMatter>(file, out var qaFrontMatter)
+                && qaFrontMatter != null)
             {
-                if (qaFrontMatter == null)
-                {
-                    continue;
-                }
-
-                if (string.IsNullOrEmpty(qaFrontMatter.Question))
-                {
-                    continue;
-                }
-
-                var qaItem = new QaItem() 
-                { 
-                    Question = qaFrontMatter.Question,
-                    File = file,
-                    Popularity = qaFrontMatter.Popularity
-                };
-
-                qaItems.Add(qaItem);
+                question = qaFrontMatter.Question;
+                popularity = qaFrontMatter.Popularity ?? 0;
             }
-        }
 
-        return qaItems;
-    }
-
-    private static bool TryGetQaFrontMatter(string markdownContent, out QaFrontMatter? qaFrontMatter)
-    {
-        qaFrontMatter = null;
-
-        try
-        {
-            var document = MarkdownManager.Parse(markdownContent);
-            var yamlBlock = document
-                .Descendants<YamlFrontMatterBlock>()
-                .FirstOrDefault();
-
-
-            if (yamlBlock != null)
+            if (string.IsNullOrEmpty(question))
             {
-                string yaml = yamlBlock.Lines.ToString();
-
-                var deserializer = new DeserializerBuilder()
-                    .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                    .Build();
-
-                var metadata = deserializer.Deserialize<QaFrontMatter>(yaml);
-                qaFrontMatter = metadata;
-
-                return true;
+                question = MarkdownManager.ReadTitleOrDefault(
+                    file,
+                    Path.GetFileNameWithoutExtension(file.Name),
+                    8);
             }
-        }
-        catch (YamlException)
-        {
-            return false;
+
+            var qaItem = new QaItem()
+            {
+                Question = question,
+                File = file,
+                Popularity = popularity
+            };
+
+            qaItems.Add(qaItem);
         }
 
-        return false;
+        return qaItems
+            .OrderByDescending(qa => qa.Popularity)
+            .ThenByDescending(qa => qa.File.CreationTimeUtc);
     }
 }

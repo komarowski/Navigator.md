@@ -86,9 +86,7 @@ select * from table
 ```markdown
 ---
 name: TaskName
-description: ShortDescription
-status: `Open` · `Frozen` · `Closed`
-link: https://example.com
+status: 0
 ---
 
 # Task
@@ -114,8 +112,6 @@ Describe the task here.
 ```markdown
 ---
 question: How to debug async requests in ASP.NET Core?
-context: Research notes for API performance
-searchTags: [csharp, aspnetcore, async]
 popularity: 0
 ---
 

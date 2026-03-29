@@ -1,9 +1,3 @@
-using Markdig.Extensions.Yaml;
-using Markdig.Syntax;
-using YamlDotNet.Core;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-
 namespace MarkdownNavigator.Core.Domain;
 
 public class TaskScanner : ITaskScanner
@@ -12,75 +6,46 @@ public class TaskScanner : ITaskScanner
     {
         var tasks = new List<TaskItem>();
 
-        if (!Directory.Exists(tasksFolder))
+        var tasksFolderInfo = new DirectoryInfo(tasksFolder);
+        if (!tasksFolderInfo.Exists)
         {
             return tasks;
         }
 
-        var files = Directory.GetFiles(tasksFolder, "*.md", SearchOption.AllDirectories);
+        var files = tasksFolderInfo.GetFiles("*.md", SearchOption.AllDirectories);
 
         foreach (var file in files)
         {
-            var markdownContent = File.ReadAllText(file);
-            if (TryGetTaskFrontMatter(markdownContent, out var taskFrontMatter))
+            string? taskName = null;
+            var taskStatus = TaskItemStatus.Open;
+
+            if (MarkdownManager.TryReadFrontMatter<TaskFrontMatter>(file, out var taskFrontMatter)
+                && taskFrontMatter != null)
             {
-                if (taskFrontMatter == null)
-                {
-                    continue;
-                }
-
-                if (string.IsNullOrEmpty(taskFrontMatter.Name))
-                {
-                    continue;
-                }
-
-                var task = new TaskItem() 
-                { 
-                    Name = taskFrontMatter.Name,
-                    File = new FileInfo(file),
-                    Status = taskFrontMatter.Status
-                };
-
-                tasks.Add(task);
+                taskName = taskFrontMatter.Name;
+                taskStatus = taskFrontMatter.Status ?? TaskItemStatus.Open;
             }
+
+            if (string.IsNullOrEmpty(taskName))
+            {
+                taskName = MarkdownManager.ReadTitleOrDefault(
+                    file,
+                    Path.GetFileNameWithoutExtension(file.Name),
+                    8);
+            }
+
+            var task = new TaskItem()
+            {
+                Name = taskName,
+                File = file,
+                Status = taskStatus
+            };
+
+            tasks.Add(task);
         }
 
         return tasks
             .OrderBy(task => task.Status)
             .ThenByDescending(task => task.File.CreationTimeUtc);
-    }
-
-    private static bool TryGetTaskFrontMatter(string markdownContent, out TaskFrontMatter? taskFrontMatter)
-    {
-        taskFrontMatter = null;
-
-        try
-        {
-            var document = MarkdownManager.Parse(markdownContent);
-            var yamlBlock = document
-                .Descendants<YamlFrontMatterBlock>()
-                .FirstOrDefault();
-
-
-            if (yamlBlock != null)
-            {
-                string yaml = yamlBlock.Lines.ToString();
-
-                var deserializer = new DeserializerBuilder()
-                    .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                    .Build();
-
-                var metadata = deserializer.Deserialize<TaskFrontMatter>(yaml);
-                taskFrontMatter = metadata;
-
-                return true;
-            }
-        }
-        catch (YamlException)
-        {
-            return false;
-        }
-
-        return false;
     }
 }

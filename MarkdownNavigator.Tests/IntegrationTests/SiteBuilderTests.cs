@@ -447,7 +447,7 @@ Resolved incorrect asset paths for deeply nested wiki pages.
         File.WriteAllText(Path.Combine(qaFolder, "why-is-index-generated.md"), """
 ---
 question: Why is index.md generated for folders?
-popularity: 3
+popularity: 2
 ---
 
 # Why is index.md generated for folders?

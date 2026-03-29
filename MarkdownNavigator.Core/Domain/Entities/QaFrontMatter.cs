@@ -8,10 +8,10 @@ public class QaFrontMatter
     /// <summary>
     /// The main question shown for the Q&amp;A item.
     /// </summary>
-    public required string Question { get; set; }
+    public string? Question { get; set; }
 
     /// <summary>
     /// Optional popularity score used for sorting or ranking.
     /// </summary>
-    public int Popularity { get; set; } = 0;
+    public int? Popularity { get; set; } = 0;
 }

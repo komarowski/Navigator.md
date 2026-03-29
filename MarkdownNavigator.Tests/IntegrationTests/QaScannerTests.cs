@@ -50,17 +50,19 @@ public class QaScannerTests
             "Question in subdirectory?");
 
         File.WriteAllText(Path.Combine(_testQaFolder, "no_frontmatter.md"), "# No front matter here");
-        File.WriteAllText(Path.Combine(_testQaFolder, "invalid_frontmatter.md"), "---\nWrong: Format\n--\n\n# Content");
+        File.WriteAllText(Path.Combine(_testQaFolder, "invalid_frontmatter.md"), "---\nWrong: Format\n--\n\n");
 
         // Act
         var qaItems = _qaScanner.ScanForQa(_testQaFolder).ToList();
 
         // Assert
-        Assert.That(qaItems, Has.Count.EqualTo(4));
+        Assert.That(qaItems, Has.Count.EqualTo(6));
         Assert.That(qaItems, Has.Some.Matches<QaItem>(q => q.Question == "What is .NET?" && q.Popularity == 5));
         Assert.That(qaItems, Has.Some.Matches<QaItem>(q => q.Question == "How do I install Visual Studio?"));
         Assert.That(qaItems, Has.Some.Matches<QaItem>(q => q.Question == "What is ASP.NET Core?" && q.Popularity == 10));
         Assert.That(qaItems, Has.Some.Matches<QaItem>(q => q.Question == "Question in subdirectory?"));
+        Assert.That(qaItems, Has.Some.Matches<QaItem>(q => q.Question == "No front matter here"));
+        Assert.That(qaItems, Has.Some.Matches<QaItem>(q => q.Question == "invalid_frontmatter"));
     }
 
     [Test]

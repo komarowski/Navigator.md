@@ -2,7 +2,7 @@
 
 public class TaskFrontMatter
 {
-    public required string Name { get; set; }
+    public string? Name { get; set; }
 
-    public TaskItemStatus Status { get; set; } = TaskItemStatus.Open;
+    public TaskItemStatus? Status { get; set; } = TaskItemStatus.Open;
 }
